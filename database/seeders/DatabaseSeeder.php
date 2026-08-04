@@ -19,6 +19,15 @@ class DatabaseSeeder extends Seeder
             RoleAndUserSeeder::class,
             NewsSeeder::class,
             TimelineSeeder::class,
+            SettingsTableSeeder::class,
+            OfficialPartnersTableSeeder::class,
+            SlidersTableSeeder::class,
+            GalleriesTableSeeder::class,
+            PostsTableSeeder::class,
+            CategoriesTableSeeder::class,
+            VideoProfilesTableSeeder::class,
+            FaqsTableSeeder::class,
+            TimelinesTableSeeder::class,
         ]);
     }
 }
