@@ -24,7 +24,19 @@ class PaperSubmission extends Model
         'is_best_paper',
         'payment_proof_path',
         'publication_status',
+        'co_authors',
+        'supplementary_file_path',
+        'loa_path',
+        'blind_manuscript_path',
+        'plagiarism_score',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'co_authors' => 'array',
+        ];
+    }
 
     public function reviews()
     {

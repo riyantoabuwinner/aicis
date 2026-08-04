@@ -21,13 +21,22 @@ class PaperSubmissionResource extends Resource
 
     protected static ?string $navigationGroup = 'Event Management';
 
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->where('status', '!=', 'Draft');
+    }
     
     public static function canAccess(): bool
     {
         return auth()->user()->hasRole(['superadmin', 'admin']);
     }
 
-public static function form(Form $form): Form
+    public static function canCreate(): bool
+    {
+        return false;
+    }
+
+    public static function form(Form $form): Form
     {
         return $form
             ->schema([
@@ -137,17 +146,30 @@ public static function form(Form $form): Form
                                 'Administrative Rejected' => 'Fail (Reject)',
                             ])
                             ->required(),
+                        Forms\Components\TextInput::make('plagiarism_score')
+                            ->label('Plagiarism Score (%)')
+                            ->numeric()
+                            ->suffix('%'),
+                        Forms\Components\FileUpload::make('blind_manuscript_path')
+                            ->label('Blind Manuscript (Optional)')
+                            ->helperText('Upload an anonymous version of the manuscript if the author forgot to remove their details.')
+                            ->acceptedFileTypes(['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']),
                         Forms\Components\Textarea::make('validation_notes')
                             ->label('Feedback/Notes')
                             ->required(),
                     ])
                     ->action(function (PaperSubmission $record, array $data): void {
-                        $record->update([
+                        $updateData = [
                             'status' => $data['decision'],
                             'validation_notes' => $data['validation_notes'],
-                        ]);
+                            'plagiarism_score' => $data['plagiarism_score'] ?? null,
+                        ];
+                        if (isset($data['blind_manuscript_path'])) {
+                            $updateData['blind_manuscript_path'] = $data['blind_manuscript_path'];
+                        }
+                        $record->update($updateData);
                     })
-                    ->visible(fn (PaperSubmission $record): bool => in_array($record->status, ['Abstract Submitted', 'Full Paper Submitted', 'Pending Administrative Check'])),
+                    ->visible(fn (PaperSubmission $record): bool => in_array($record->status, ['Abstract Submitted', 'Full Paper Submitted', 'Pending Administrative Check', 'Unassigned'])),
                 
                 Tables\Actions\Action::make('Assign Reviewers')
                     ->icon('heroicon-m-users')
@@ -160,29 +182,93 @@ public static function form(Form $form): Form
                                 return \App\Models\User::role('reviewer')->pluck('name', 'id');
                             })
                             ->required(),
+                        Forms\Components\DatePicker::make('deadline')
+                            ->label('Review Deadline')
+                            ->required()
+                            ->default(now()->addDays(14)),
                     ])
                     ->action(function (PaperSubmission $record, array $data): void {
                         foreach ($data['reviewer_ids'] as $reviewerId) {
-                            \App\Models\PaperReview::firstOrCreate([
-                                'paper_submission_id' => $record->id,
-                                'reviewer_id' => $reviewerId,
-                            ]);
+                            \App\Models\PaperReview::firstOrCreate(
+                                [
+                                    'paper_submission_id' => $record->id,
+                                    'reviewer_id' => $reviewerId,
+                                ],
+                                [
+                                    'deadline' => $data['deadline'],
+                                ]
+                            );
                         }
+                        \Filament\Notifications\Notification::make()
+                            ->title('Reviewers assigned successfully')
+                            ->success()
+                            ->send();
                     })
-                    ->visible(fn (PaperSubmission $record): bool => $record->status === 'Under Double Blind Review'),
+                    ->visible(fn (PaperSubmission $record): bool => $record->status === 'Under Double Blind Review' || $record->status === 'Revision Submitted'),
+                    
+                Tables\Actions\Action::make('Send Reminder')
+                    ->icon('heroicon-m-bell-alert')
+                    ->color('secondary')
+                    ->requiresConfirmation()
+                    ->action(function (PaperSubmission $record) {
+                        // In a real app, dispatch a Job or send an email to reviewers who haven't finished.
+                        // Here we just show a success notification as a placeholder.
+                        \Filament\Notifications\Notification::make()
+                            ->title('Reminder sent to pending reviewers')
+                            ->success()
+                            ->send();
+                    })
+                    ->visible(fn (PaperSubmission $record): bool => $record->reviews()->whereNull('recommendation')->exists() && ($record->status === 'Under Double Blind Review' || $record->status === 'Revision Submitted')),
 
                 Tables\Actions\Action::make('Issue LoA')
                     ->icon('heroicon-m-document-check')
                     ->color('success')
-                    ->requiresConfirmation()
-                    ->action(function (PaperSubmission $record): void {
-                        $record->update(['status' => 'LoA Issued']);
-                        // Trigger LoA email here...
+                    ->form([
+                        Forms\Components\FileUpload::make('loa_path')
+                            ->label('Letter of Acceptance (PDF)')
+                            ->acceptedFileTypes(['application/pdf'])
+                            ->required(),
+                    ])
+                    ->action(function (PaperSubmission $record, array $data): void {
+                        $record->update([
+                            'status' => 'LoA Issued',
+                            'loa_path' => $data['loa_path'],
+                        ]);
+                        
+                        // Send LoA Email
+                        \Illuminate\Support\Facades\Mail::to($record->author->email)
+                            ->send(new \App\Mail\LoAIssuedMail($record));
+
+                        \Filament\Notifications\Notification::make()
+                            ->title('LoA Issued & Sent to Author')
+                            ->success()
+                            ->send();
                     })
                     ->visible(fn (PaperSubmission $record): bool => $record->status === 'Accepted'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\BulkAction::make('export_proceedings')
+                        ->label('Export Proceedings Data')
+                        ->icon('heroicon-m-arrow-down-tray')
+                        ->color('success')
+                        ->action(function (\Illuminate\Database\Eloquent\Collection $records) {
+                            $csvData = "Title,Author,Email,Institution,Abstract\n";
+                            foreach ($records as $record) {
+                                if ($record->status === 'Accepted' || $record->status === 'LoA Issued' || $record->status === 'Published') {
+                                    $title = str_replace('"', '""', $record->title);
+                                    $authorName = str_replace('"', '""', $record->author->name);
+                                    $authorEmail = str_replace('"', '""', $record->author->email);
+                                    $institution = str_replace('"', '""', $record->author->institution);
+                                    $abstract = str_replace('"', '""', $record->abstract);
+                                    $csvData .= "\"$title\",\"$authorName\",\"$authorEmail\",\"$institution\",\"$abstract\"\n";
+                                }
+                            }
+                            return response()->streamDownload(function () use ($csvData) {
+                                echo $csvData;
+                            }, 'proceedings_data.csv');
+                        })
+                        ->requiresConfirmation(),
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);

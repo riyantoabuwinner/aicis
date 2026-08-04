@@ -38,5 +38,7 @@ class AppServiceProvider extends ServiceProvider
         } catch (\Exception $e) {
             // Silently ignore during initial migrations
         }
+
+        \App\Models\PaperSubmission::observe(\App\Observers\PaperSubmissionObserver::class);
     }
 }

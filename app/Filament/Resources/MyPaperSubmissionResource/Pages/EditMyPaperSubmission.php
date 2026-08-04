@@ -21,7 +21,7 @@ class EditMyPaperSubmission extends EditRecord
     {
         // If they upload full paper during edit and status was Abstract Submitted or Revision Required
         if (!empty($data['full_paper_path'])) {
-            if ($this->record->status === 'Abstract Submitted') {
+            if (in_array($this->record->status, ['Draft', 'Abstract Submitted'])) {
                 $data['status'] = 'Full Paper Submitted';
             } elseif ($this->record->status === 'Revision Required') {
                 $data['status'] = 'Revision Submitted';

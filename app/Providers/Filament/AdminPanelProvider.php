@@ -63,6 +63,7 @@ class AdminPanelProvider extends PanelProvider
             ->widgets([
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
+                \App\Filament\Widgets\AuthorGuidelinesWidget::class,
             ])
             ->navigationGroups([
                 \Filament\Navigation\NavigationGroup::make()
@@ -119,12 +120,11 @@ class AdminPanelProvider extends PanelProvider
                     
                     /* Modern Backend Styling */
                     .fi-topbar {
-                        background: rgba(255, 255, 255, 0.8) !important;
-                        backdrop-filter: blur(12px) !important;
+                        background: rgba(255, 255, 255, 0.95) !important;
                         border-bottom: 1px solid rgba(212, 175, 55, 0.2) !important;
                     }
                     .dark .fi-topbar {
-                        background: rgba(4, 37, 25, 0.8) !important;
+                        background: rgba(4, 37, 25, 0.95) !important;
                         border-bottom: 1px solid rgba(212, 175, 55, 0.2) !important;
                     }
                     
@@ -222,6 +222,22 @@ class AdminPanelProvider extends PanelProvider
                     /* Hide the entire native Filters header to remove "Filters" text, the floating loading spinner, and the text Reset link */
                     .fi-ta-filters > .flex.items-center.justify-between {
                         display: none !important;
+                    }
+                    
+                    /* Elegant global typography scaling */
+                    html {
+                        font-size: 14px !important; /* Reduces overall size */
+                    }
+                    body {
+                        -webkit-font-smoothing: antialiased;
+                        -moz-osx-font-smoothing: grayscale;
+                        letter-spacing: 0.015em;
+                    }
+                    
+                    /* Refined font weights for headings */
+                    h1, h2, h3, h4, h5, h6 {
+                        font-weight: 500 !important;
+                        letter-spacing: 0.025em;
                     }
                 </style>
             ',

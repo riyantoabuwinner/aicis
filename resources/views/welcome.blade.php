@@ -315,9 +315,9 @@
                         $titleColor = $isEven ? $titleColorEven : $titleColorOdd;
                         $descColor = $isEven ? $descColorEven : $descColorOdd;
                     @endphp
-                    <div style="{{ $bgStyle }} padding: 18px 25px; border-radius: 10px; position: relative; overflow: hidden; display: flex; align-items: flex-start; gap: 15px; transition: transform 0.3s ease;">
+                    <div style="{{ $bgStyle }} padding: 12px 18px; border-radius: 8px; position: relative; overflow: hidden; display: flex; align-items: flex-start; gap: 12px; transition: transform 0.3s ease;">
                         <!-- Number Watermark -->
-                        <div style="font-size: 3rem; font-weight: 700; color: {{ $numberColor }}; position: absolute; right: 20px; top: 10px; line-height: 1; font-family: var(--font-heading);">
+                        <div style="font-size: 2.5rem; font-weight: 700; color: {{ $numberColor }}; position: absolute; right: 15px; top: 5px; line-height: 1; font-family: var(--font-heading);">
                             {{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}
                         </div>
                         
@@ -328,8 +328,8 @@
                         
                         <!-- Content -->
                         <div style="position: relative; z-index: 1;">
-                            <h5 style="font-size: 1.05rem; font-weight: 500; margin-bottom: 6px; color: {{ $titleColor }};">{{ $theme->name }}</h5>
-                            <p style="color: {{ $descColor }}; font-size: 0.85rem; line-height: 1.6; margin: 0; font-weight: 300;">{{ $theme->description }}</p>
+                            <h5 style="font-size: 1.05rem; font-weight: 500; margin-bottom: 2px; color: {{ $titleColor }};">{{ $theme->name }}</h5>
+                            <p style="color: {{ $descColor }}; font-size: 0.85rem; line-height: 1.4; margin: 0; font-weight: 300;">{{ $theme->description }}</p>
                         </div>
                     </div>
                     @endforeach

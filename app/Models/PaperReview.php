@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class PaperReview extends Model
@@ -15,7 +16,15 @@ class PaperReview extends Model
         'recommendation',
         'comments_for_author',
         'comments_for_admin',
+        'deadline',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'deadline' => 'date',
+        ];
+    }
 
     public function paperSubmission()
     {

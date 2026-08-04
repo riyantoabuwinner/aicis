@@ -80,10 +80,10 @@ class MyPaperSubmissionResource extends Resource
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
-                        'Abstract Submitted', 'Full Paper Submitted', 'Revision Submitted' => 'warning',
-                        'Pending Administrative Check', 'Under Double Blind Review' => 'info',
+                        'Unassigned', 'Abstract Submitted', 'Full Paper Submitted' => 'warning',
+                        'In Review', 'Revision', 'Revision Submitted', 'Pending Administrative Check', 'Under Double Blind Review' => 'info',
                         'Accepted', 'LoA Issued', 'Registered & Paid', 'Presented', 'Published' => 'success',
-                        'Administrative Rejected', 'Rejected', 'Revision Required' => 'danger',
+                        'Rejected', 'Administrative Rejected', 'Revision Required' => 'danger',
                         default => 'gray',
                     }),
                 Tables\Columns\TextColumn::make('created_at')
@@ -96,12 +96,21 @@ class MyPaperSubmissionResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make()
                     ->visible(fn (PaperSubmission $record): bool => in_array($record->status, [
+                        'Draft',
                         'Abstract Submitted', 
                         'Full Paper Submitted', 
                         'Revision Required',
                         'Pending Administrative Check'
                     ])),
                 Tables\Actions\ViewAction::make(),
+                Tables\Actions\Action::make('Submit')
+                    ->icon('heroicon-m-paper-airplane')
+                    ->color('success')
+                    ->requiresConfirmation()
+                    ->action(fn (PaperSubmission $record) => $record->update(['status' => 'Abstract Submitted']))
+                    ->visible(fn (PaperSubmission $record): bool => $record->status === 'Draft'),
+                Tables\Actions\DeleteAction::make()
+                    ->visible(fn (PaperSubmission $record): bool => $record->status === 'Draft'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
