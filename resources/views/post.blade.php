@@ -154,13 +154,20 @@
     
     .article-body-text > p:first-of-type::first-letter {
         font-family: var(--font-heading);
-        color: var(--primary-color);
+        color: #2e7d32; /* Hijau / Green */
         font-size: 3.8rem; /* Reduced from 4.8rem */
         line-height: 0.8;
         float: left;
         padding-top: 8px;
         padding-right: 12px;
         font-weight: 700;
+    }
+
+    .article-body-text img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin: 20px 0;
     }
 
     .article-body-text p {
