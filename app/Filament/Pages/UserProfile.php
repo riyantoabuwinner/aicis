@@ -37,6 +37,7 @@ class UserProfile extends Page implements HasForms
                         \Filament\Forms\Components\FileUpload::make('avatar_url')
                             ->label('Profile Photo')
                             ->avatar()
+                            ->disk('public')
                             ->directory('avatars')
                             ->columnSpanFull(),
                         TextInput::make('front_title')
