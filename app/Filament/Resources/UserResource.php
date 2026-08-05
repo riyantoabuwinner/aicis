@@ -157,6 +157,7 @@ class UserResource extends Resource
                     ->iconButton()
                     ->icon('heroicon-o-users')
                     ->color('warning')
+                    ->extraAttributes(['data-navigate-ignore' => true])
                     ->visible(fn ($record) => auth()->user()->hasRole('superadmin') && auth()->id() !== $record->id)
                     ->url(fn ($record) => route('admin.impersonate', $record->id)),
             ])

@@ -46,12 +46,13 @@ Route::get('/admin/custom-logout', function () {
 })->name('admin.custom_logout');
 
 Route::get('/admin/impersonate/{user}', function (\App\Models\User $user) {
-    if (!auth()->check() || !auth()->user()->hasRole('superadmin')) {
+    if (!\Filament\Facades\Filament::auth()->check() || !\Filament\Facades\Filament::auth()->user()->hasRole('superadmin')) {
         abort(403);
     }
     
-    auth()->login($user);
-    request()->session()->regenerate();
+    \Filament\Facades\Filament::auth()->logout();
+    \Filament\Facades\Filament::auth()->login($user);
+    request()->session()->save();
     
     return redirect('/admin');
 })->name('admin.impersonate');
