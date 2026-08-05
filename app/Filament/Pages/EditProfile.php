@@ -23,7 +23,18 @@ class EditProfile extends Page implements HasForms
 
     public function mount(): void
     {
-        $this->form->fill(auth()->user()->attributesToArray());
+        $user = auth()->user();
+        $data = $user->attributesToArray();
+        
+        if ($user->nationality === 'Foreign Citizen') {
+            $data['province_text'] = $user->province;
+            $data['city_text'] = $user->city;
+        } else {
+            $data['province_select'] = $user->province;
+            $data['city_select'] = $user->city;
+        }
+
+        $this->form->fill($data);
     }
 
     public function form(Form $form): Form
