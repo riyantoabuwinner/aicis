@@ -12,65 +12,50 @@ class RegionSeeder extends Seeder
      */
     public function run(): void
     {
-        $url = 'https://raw.githubusercontent.com/Kristories/kodepos/master/kodepos.json';
+        $url = 'https://raw.githubusercontent.com/mtegarsantosa/json-nama-daerah-indonesia/master/regions.json';
+        
+        $this->command->info("Fetching region data from $url...");
+
         $response = \Illuminate\Support\Facades\Http::withOptions(['verify' => false])
-            ->withHeaders(['User-Agent' => 'Laravel'])
+            ->withHeaders([
+                'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
+            ])
             ->get($url);
 
         if (!$response->successful()) {
-            $this->command->error('Failed to download region data: ' . $response->status());
+            $this->command->error("Failed to download region data. HTTP Status: " . $response->status());
             return;
         }
 
-        $json = $response->body();
+        $data = $response->json();
 
-        $data = json_decode($json, true);
-        if (!is_array($data)) {
-            $this->command->error('Invalid JSON data.');
+        if (empty($data)) {
+            $this->command->error("Failed to parse JSON or JSON is empty.");
             return;
         }
 
         $this->command->info('Parsing and inserting region data...');
 
-        // Extract unique provinces
-        $provinces = [];
-
-        foreach ($data as $kodepos => $item) {
+        foreach ($data as $item) {
             $provName = trim($item['provinsi'] ?? '');
-            $cityName = trim($item['kabupaten'] ?? '');
-            $kodepos = trim((string)$kodepos);
-
-            if (empty($provName) || empty($cityName)) continue;
-
-            if (!isset($provinces[$provName])) {
-                $provinces[$provName] = [];
-            }
-            if (!isset($provinces[$provName][$cityName])) {
-                $provinces[$provName][$cityName] = [];
-            }
-            if (!in_array($kodepos, $provinces[$provName][$cityName])) {
-                $provinces[$provName][$cityName][] = $kodepos;
-            }
-        }
-
-        foreach ($provinces as $provName => $provCities) {
+            
+            if (empty($provName)) continue;
+            
             $province = \App\Models\Province::firstOrCreate(['name' => $provName]);
             
-            foreach ($provCities as $cityName => $codes) {
-                $city = \App\Models\City::firstOrCreate([
-                    'province_id' => $province->id,
-                    'name' => $cityName
-                ]);
-                
-                foreach ($codes as $code) {
-                    \App\Models\PostalCode::firstOrCreate([
-                        'city_id' => $city->id,
-                        'postal_code' => $code
+            if (!empty($item['kota']) && is_array($item['kota'])) {
+                foreach ($item['kota'] as $cityName) {
+                    $cityName = trim($cityName);
+                    if (empty($cityName)) continue;
+                    
+                    \App\Models\City::firstOrCreate([
+                        'province_id' => $province->id,
+                        'name' => $cityName
                     ]);
                 }
             }
         }
 
-        $this->command->info('Region data seeded successfully.');
+        $this->command->info('Provinces and Cities seeded successfully.');
     }
 }

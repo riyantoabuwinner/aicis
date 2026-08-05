@@ -161,9 +161,26 @@ class UserProfile extends Page implements HasForms
                         \Filament\Forms\Components\Select::make('postal_code_select')
                             ->label('Postal Code')
                             ->options(function (\Filament\Forms\Get $get) {
-                                $city = \App\Models\City::where('name', $get('city_select'))->first();
-                                if (!$city) return [];
-                                return $city->postalCodes->pluck('postal_code', 'postal_code');
+                                $cityName = $get('city_select');
+                                if (empty($cityName)) return [];
+                                
+                                // Call external API for real-time postal codes because 90k database rows is too heavy
+                                try {
+                                    // Remove prefixes like 'Kota ' or 'Kab. ' to improve search accuracy
+                                    $cleanCity = str_ireplace(['Kota ', 'Kab. ', 'Kabupaten '], '', $cityName);
+                                    
+                                    $response = \Illuminate\Support\Facades\Http::timeout(10)->get('https://kodepos.vercel.app/search?q=' . urlencode(trim($cleanCity)));
+                                    if ($response->successful() && $response->json('status')) {
+                                        $data = $response->json('data');
+                                        if (is_array($data) && count($data) > 0) {
+                                            return collect($data)->pluck('postalcode', 'postalcode')->unique()->sort()->toArray();
+                                        }
+                                    }
+                                } catch (\Exception $e) {
+                                    // Fallback if API fails
+                                }
+                                
+                                return [];
                             })
                             ->required()
                             ->searchable()
