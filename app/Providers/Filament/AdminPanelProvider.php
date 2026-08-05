@@ -142,6 +142,11 @@ class AdminPanelProvider extends PanelProvider
         });
 
         \Filament\Support\Facades\FilamentView::registerRenderHook(
+            \Filament\View\PanelsRenderHook::GLOBAL_SEARCH_BEFORE,
+            fn (): \Illuminate\Contracts\View\View => \Illuminate\Support\Facades\View::make('partials.welcome-topbar')
+        );
+
+        \Filament\Support\Facades\FilamentView::registerRenderHook(
             \Filament\View\PanelsRenderHook::GLOBAL_SEARCH_AFTER,
             fn (): \Illuminate\Contracts\View\View => \Illuminate\Support\Facades\View::make('partials.filament-lang-switcher')
         );
