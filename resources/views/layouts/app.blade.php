@@ -181,7 +181,6 @@
             100% { transform: translateX(-100%); }
         }
     </style>
-    @endif
 
     <!-- Main Content -->
     <main>
