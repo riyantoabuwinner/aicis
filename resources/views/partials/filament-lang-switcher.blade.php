@@ -59,11 +59,6 @@
 </style>
 
 <div style="display: flex; align-items: center; gap: 15px; margin-right: 15px;">
-    <!-- Dark Mode Toggle -->
-    <div class="dark-mode-toggle" id="customDarkModeToggle" title="Toggle Dark/Light Mode" style="cursor: pointer; display: flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--gray-300, rgba(255,255,255,0.3)); background: var(--white, #fff); color: var(--text-dark, #333); transition: all 0.3s;">
-        <i class="fas fa-moon"></i>
-    </div>
-
     <!-- Custom Language Dropdown -->
     <div class="custom-lang-dropdown">
         <div class="current-lang" id="currentLangBtn">
@@ -81,6 +76,11 @@
                 <img src="https://flagcdn.com/w20/sa.png" alt="Arabic" style="width: 20px;"> العربية
             </a>
         </div>
+    </div>
+
+    <!-- Dark Mode Toggle -->
+    <div class="dark-mode-toggle" id="customDarkModeToggle" title="Toggle Dark/Light Mode" style="cursor: pointer; display: flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--gray-300, rgba(255,255,255,0.3)); background: var(--white, #fff); color: var(--text-dark, #333); transition: all 0.3s;">
+        <i class="fas fa-moon"></i>
     </div>
 </div>
 
