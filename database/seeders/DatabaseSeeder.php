@@ -15,19 +15,24 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        \Illuminate\Support\Facades\Schema::disableForeignKeyConstraints();
+
         $this->call([
             RoleAndUserSeeder::class,
+            CategoriesTableSeeder::class,
+            PostsTableSeeder::class,
             NewsSeeder::class,
             TimelineSeeder::class,
             SettingsTableSeeder::class,
             OfficialPartnersTableSeeder::class,
             SlidersTableSeeder::class,
             GalleriesTableSeeder::class,
-            PostsTableSeeder::class,
-            CategoriesTableSeeder::class,
             VideoProfilesTableSeeder::class,
             FaqsTableSeeder::class,
             TimelinesTableSeeder::class,
+            PaperSubmissionSeeder::class,
         ]);
+
+        \Illuminate\Support\Facades\Schema::enableForeignKeyConstraints();
     }
 }
