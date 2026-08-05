@@ -83,6 +83,13 @@ class UserProfile extends Page implements HasForms
                             ->label('Postal Code')
                             ->required()
                             ->maxLength(50),
+                        \Filament\Forms\Components\Select::make('nationality')
+                            ->label('Nationality')
+                            ->options([
+                                'Indonesian Citizen' => 'Indonesian Citizen',
+                                'Foreign Citizen' => 'Foreign Citizen',
+                            ])
+                            ->required(),
                         \Filament\Forms\Components\Select::make('highest_education')
                             ->label('Highest Education')
                             ->options([
