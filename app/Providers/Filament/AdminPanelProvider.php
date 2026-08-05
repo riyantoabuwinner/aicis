@@ -86,7 +86,8 @@ class AdminPanelProvider extends PanelProvider
                     ->sort(999),
             ])
             ->plugins([
-                FilamentMenuBuilderPlugin::make(),
+                FilamentMenuBuilderPlugin::make()
+                    ->navigationGroup('Site Setting'),
             ])
             ->middleware([
                 EncryptCookies::class,
