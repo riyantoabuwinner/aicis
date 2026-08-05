@@ -205,7 +205,7 @@ class EditProfile extends Page implements HasForms
                             ->maxLength(255),
                         \Filament\Forms\Components\Select::make('institution')
                             ->label('Institution')
-                            ->options(fn () => \App\Models\Institution::pluck('name', 'name'))
+                            ->options(fn () => \App\Models\OfficialPartner::pluck('name', 'name'))
                             ->searchable()
                             ->createOptionForm([
                                 TextInput::make('new_institution')
