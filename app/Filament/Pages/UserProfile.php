@@ -86,7 +86,7 @@ class UserProfile extends Page implements HasForms
                             ->visible(fn (\Filament\Forms\Get $get) => $get('nationality') === 'Foreign Citizen')
                             ->dehydrated(false)
                             ->afterStateHydrated(function (TextInput $component, $state, $record) {
-                                if ($record?->nationality === 'Foreign Citizen') {
+                                if ($record && $record->nationality === 'Foreign Citizen') {
                                     $component->state($record->province);
                                 }
                             })
@@ -100,7 +100,7 @@ class UserProfile extends Page implements HasForms
                             ->visible(fn (\Filament\Forms\Get $get) => $get('nationality') !== 'Foreign Citizen')
                             ->dehydrated(false)
                             ->afterStateHydrated(function (\Filament\Forms\Components\Select $component, $state, $record) {
-                                if ($record?->nationality !== 'Foreign Citizen') {
+                                if ($record && $record->nationality !== 'Foreign Citizen') {
                                     $component->state($record->province);
                                 }
                             })
@@ -118,7 +118,7 @@ class UserProfile extends Page implements HasForms
                             ->visible(fn (\Filament\Forms\Get $get) => $get('nationality') === 'Foreign Citizen')
                             ->dehydrated(false)
                             ->afterStateHydrated(function (TextInput $component, $state, $record) {
-                                if ($record?->nationality === 'Foreign Citizen') {
+                                if ($record && $record->nationality === 'Foreign Citizen') {
                                     $component->state($record->city);
                                 }
                             })
@@ -136,7 +136,7 @@ class UserProfile extends Page implements HasForms
                             ->visible(fn (\Filament\Forms\Get $get) => $get('nationality') !== 'Foreign Citizen')
                             ->dehydrated(false)
                             ->afterStateHydrated(function (\Filament\Forms\Components\Select $component, $state, $record) {
-                                if ($record?->nationality !== 'Foreign Citizen') {
+                                if ($record && $record->nationality !== 'Foreign Citizen') {
                                     $component->state($record->city);
                                 }
                             })
@@ -153,7 +153,7 @@ class UserProfile extends Page implements HasForms
                             ->visible(fn (\Filament\Forms\Get $get) => $get('nationality') === 'Foreign Citizen')
                             ->dehydrated(false)
                             ->afterStateHydrated(function (TextInput $component, $state, $record) {
-                                if ($record?->nationality === 'Foreign Citizen') {
+                                if ($record && $record->nationality === 'Foreign Citizen') {
                                     $component->state($record->postal_code);
                                 }
                             })
@@ -170,7 +170,7 @@ class UserProfile extends Page implements HasForms
                             ->visible(fn (\Filament\Forms\Get $get) => $get('nationality') !== 'Foreign Citizen')
                             ->dehydrated(false)
                             ->afterStateHydrated(function (\Filament\Forms\Components\Select $component, $state, $record) {
-                                if ($record?->nationality !== 'Foreign Citizen') {
+                                if ($record && $record->nationality !== 'Foreign Citizen') {
                                     $component->state($record->postal_code);
                                 }
                             })
