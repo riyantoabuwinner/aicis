@@ -142,7 +142,7 @@
                 <i class="fas fa-bullhorn"></i> Announcement
             </div>
             <div style="flex-grow: 1; overflow: hidden; position: relative; padding-left: 15px;">
-                <div class="ticker-content" style="display: inline-block; white-space: nowrap; animation: ticker 25s linear infinite; padding-left: 100%;">
+                <div class="ticker-content" style="display: inline-block; white-space: nowrap; animation: ticker 25s linear infinite;">
                     @foreach($announcements as $announcement)
                         @php
                             $color = '#dfb162';
@@ -173,7 +173,7 @@
             animation-play-state: paused !important;
         }
         @keyframes ticker {
-            0% { transform: translateX(0); }
+            0% { transform: translateX(100vw); }
             100% { transform: translateX(-100%); }
         }
     </style>
