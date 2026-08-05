@@ -19,13 +19,7 @@ class CreateMyPaperSubmission extends CreateRecord
 
         $user = auth()->user();
         if (!$user->gender || !$user->address || !$user->province || !$user->city || !$user->postal_code) {
-            \Filament\Notifications\Notification::make()
-                ->title('Profile Update Required')
-                ->body('You have not completed your profile biodata. Please update your profile to proceed with paper submission.')
-                ->warning()
-                ->persistent()
-                ->send();
-
+            session()->flash('show_biodata_modal', true);
             $this->redirect(\App\Filament\Pages\UserProfile::getUrl());
         }
     }
