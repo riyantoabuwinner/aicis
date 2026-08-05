@@ -9,7 +9,12 @@
     $totalConferences = \App\Models\Conference::count();
     $totalSubmissions = \App\Models\PaperSubmission::count();
     $totalSessions = \App\Models\PresentationSession::count();
-    $totalOfficialParticipants = \App\Models\User::whereHas('paperSubmissions')->whereNotNull('institution')->distinct('institution')->count('institution');
+    $totalOfficialParticipants = \App\Models\User::whereHas('paperSubmissions')
+        ->whereNotNull('institution')
+        ->where('institution', '!=', '')
+        ->distinct()
+        ->pluck('institution')
+        ->count();
 
     // New Data Fetching for Homepage
     $timelines = \App\Models\Timeline::where('is_active', true)->orderBy('sort_order')->get();
