@@ -113,6 +113,22 @@ class UserProfile extends Page implements HasForms
                             ->createOptionUsing(function (array $data) {
                                 return $data['new_institution'];
                             }),
+                        TextInput::make('scopus_id')
+                            ->label('Scopus ID')
+                            ->maxLength(255)
+                            ->nullable(),
+                        TextInput::make('google_scholar_id')
+                            ->label('Google Scholar ID')
+                            ->maxLength(255)
+                            ->nullable(),
+                        TextInput::make('sinta_id')
+                            ->label('SINTA ID')
+                            ->maxLength(255)
+                            ->nullable(),
+                        TextInput::make('orcid_id')
+                            ->label('ORCID ID')
+                            ->maxLength(255)
+                            ->nullable(),
                     ]),
                 TextInput::make('password')
                     ->password()

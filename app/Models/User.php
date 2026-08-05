@@ -39,6 +39,10 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, HasName
         'study_program',
         'university',
         'institution',
+        'scopus_id',
+        'google_scholar_id',
+        'sinta_id',
+        'orcid_id',
         'password',
         'is_approved',
     ];
