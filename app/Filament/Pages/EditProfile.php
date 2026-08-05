@@ -237,18 +237,12 @@ class EditProfile extends Page implements HasForms
                         \Filament\Forms\Components\Select::make('highest_education')
                             ->label('Highest Education')
                             ->options([
-                                'High School' => 'High School',
-                                'Diploma' => 'Diploma',
-                                'Bachelor' => 'Bachelor (S1)',
-                                'Master' => 'Master (S2)',
-                                'Doctorate' => 'Doctorate (S3)',
+                                'S1' => 'Bachelor (S1)',
+                                'S2' => 'Master (S2)',
+                                'S3' => 'Doctorate (S3)',
+                                'Other' => 'Other',
                             ])
                             ->required(),
-                        TextInput::make('phone')
-                            ->label('Phone Number')
-                            ->tel()
-                            ->required()
-                            ->maxLength(255),
                         TextInput::make('study_program')
                             ->label('Study Program')
                             ->required()
