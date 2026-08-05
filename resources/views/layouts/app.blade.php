@@ -115,6 +115,13 @@
         <!-- Background Pattern / Glow -->
         <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.05; pointer-events: none; background-image: radial-gradient(circle at 50% 150%, #dfb162 0%, transparent 70%);"></div>
         
+        @if($siteSettings?->dark_logo)
+        <!-- Silhouette Logo -->
+        <div style="position: absolute; bottom: 0; right: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; overflow: hidden;">
+            <img src="{{ Storage::url($siteSettings->dark_logo) }}" alt="Silhouette Logo" style="position: absolute; bottom: -50px; right: -50px; height: auto; width: 450px; max-width: 50vw; opacity: 0.08; object-fit: contain; transform: rotate(-5deg);">
+        </div>
+        @endif
+        
         <div class="container footer-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 50px; position: relative; z-index: 2; padding-bottom: 60px;">
             <div class="footer-widget">
                 <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 25px;">
