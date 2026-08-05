@@ -34,9 +34,21 @@
     <!-- Top Bar -->
     <div class="top-bar">
         <div class="container top-bar-container">
-            <div class="top-bar-left">
+            <div class="top-bar-left" style="display: flex; align-items: center;">
                 <span><i class="fas fa-phone-alt"></i> {{ $siteSettings?->phone ?? '+62 851-1702-2042' }}</span>
-                <span><i class="fas fa-envelope"></i> {{ $siteSettings?->email ?? 'aicis2026@syekhnurjati.ac.id' }}</span>
+                <span style="margin-left: 15px;"><i class="fas fa-envelope"></i> {{ $siteSettings?->email ?? 'aicis2026@syekhnurjati.ac.id' }}</span>
+                <!-- Top Menu -->
+                @php
+                    $topMenu = \Datlechin\FilamentMenuBuilder\Models\Menu::where('name', 'Top Menu')->first();
+                    $topMenuItems = $topMenu ? $topMenu->menuItems()->whereNull('parent_id')->orderBy('order')->get() : [];
+                @endphp
+                @if(count($topMenuItems) > 0)
+                    <div style="display: flex; gap: 15px; margin-left: 20px; font-size: 0.85rem; border-left: 1px solid rgba(255,255,255,0.3); padding-left: 15px;">
+                        @foreach($topMenuItems as $item)
+                            <a href="{{ $item->url ? url($item->url) : '#' }}" style="color: #fff; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#dfb162'" onmouseout="this.style.color='#fff'">{{ $item->title }}</a>
+                        @endforeach
+                    </div>
+                @endif
             </div>
             <div class="top-bar-right" style="display: flex; align-items: center; gap: 15px;">
                 <a href="{{ url('/contact') }}" style="color: #fff; margin-right: 10px;"><i class="fas fa-map-marker-alt"></i> {{ \Illuminate\Support\Str::limit(strip_tags($siteSettings?->address ?? 'UIN Siber Syekh Nurjati Cirebon'), 40) }}</a>
@@ -89,10 +101,15 @@
             </a>
             
             <nav class="main-menu">
-                <a href="{{ url('/') }}" class="{{ request()->is('/') ? 'active' : '' }}">Home</a>
-                <a href="{{ url('/about') }}" class="{{ request()->is('about') ? 'active' : '' }}">About</a>
-                <a href="{{ url('/history') }}" class="{{ request()->is('history') ? 'active' : '' }}">History</a>
-                <a href="{{ url('/contact') }}" class="{{ request()->is('contact') ? 'active' : '' }}">Contact</a>
+                @php
+                    $mainMenu = \Datlechin\FilamentMenuBuilder\Models\Menu::where('name', 'Main Menu')->first();
+                    $mainMenuItems = $mainMenu ? $mainMenu->menuItems()->with('children')->whereNull('parent_id')->orderBy('order')->get() : [];
+                @endphp
+                @if(count($mainMenuItems) > 0)
+                    @include('components.menu-items', ['items' => $mainMenuItems])
+                @else
+                    <a href="{{ url('/') }}" class="{{ request()->is('/') ? 'active' : '' }}">Home</a>
+                @endif
             </nav>
 
             <div class="nav-right">
@@ -109,6 +126,21 @@
     <main>
         @yield('content')
     </main>
+
+    <!-- Secondary Menu -->
+    @php
+        $secondaryMenu = \Datlechin\FilamentMenuBuilder\Models\Menu::where('name', 'Secondary Menu')->first();
+        $secondaryMenuItems = $secondaryMenu ? $secondaryMenu->menuItems()->whereNull('parent_id')->orderBy('order')->get() : [];
+    @endphp
+    @if(count($secondaryMenuItems) > 0)
+    <div style="background-color: #f8f9fa; border-top: 1px solid #eaeaea; border-bottom: 1px solid #eaeaea; padding: 15px 0;">
+        <div class="container" style="display: flex; justify-content: center; gap: 25px; flex-wrap: wrap;">
+            @foreach($secondaryMenuItems as $item)
+                <a href="{{ $item->url ? url($item->url) : '#' }}" style="color: var(--text-dark); font-weight: 500; font-size: 0.95rem; transition: color 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-dark)'">{{ $item->title }}</a>
+            @endforeach
+        </div>
+    </div>
+    @endif
 
     <!-- Footer -->
     <footer class="footer" style="background: linear-gradient(135deg, #021a10 0%, #063A27 100%); color: #cbd5e1; padding: 100px 0 0 0; position: relative; overflow: hidden; border-top: 4px solid #dfb162; border-radius: 50% 50% 0 0 / 60px 60px 0 0; margin-top: 40px;">
@@ -154,11 +186,17 @@
                     <span style="position: absolute; bottom: 0; left: 0; width: 40px; height: 3px; background: #dfb162; border-radius: 2px;"></span>
                 </h4>
                 <ul style="list-style: none; padding: 0; margin: 0;">
-                    <li style="margin-bottom: 10px;"><a href="{{ url('/') }}" style="color: #94a3b8; text-decoration: none; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 8px; font-size: 0.85rem;" onmouseover="this.style.color='#dfb162'; this.style.transform='translateX(8px)'" onmouseout="this.style.color='#94a3b8'; this.style.transform='translateX(0)'"><i class="fas fa-chevron-right" style="font-size: 0.6rem; color: #dfb162;"></i> Home</a></li>
-                    <li style="margin-bottom: 10px;"><a href="{{ url('/about') }}" style="color: #94a3b8; text-decoration: none; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 8px; font-size: 0.85rem;" onmouseover="this.style.color='#dfb162'; this.style.transform='translateX(8px)'" onmouseout="this.style.color='#94a3b8'; this.style.transform='translateX(0)'"><i class="fas fa-chevron-right" style="font-size: 0.6rem; color: #dfb162;"></i> About Conference</a></li>
-                    <li style="margin-bottom: 10px;"><a href="{{ url('/history') }}" style="color: #94a3b8; text-decoration: none; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 8px; font-size: 0.85rem;" onmouseover="this.style.color='#dfb162'; this.style.transform='translateX(8px)'" onmouseout="this.style.color='#94a3b8'; this.style.transform='translateX(0)'"><i class="fas fa-chevron-right" style="font-size: 0.6rem; color: #dfb162;"></i> Conference History</a></li>
-                    <li style="margin-bottom: 10px;"><a href="{{ url('/posts') }}" style="color: #94a3b8; text-decoration: none; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 8px; font-size: 0.85rem;" onmouseover="this.style.color='#dfb162'; this.style.transform='translateX(8px)'" onmouseout="this.style.color='#94a3b8'; this.style.transform='translateX(0)'"><i class="fas fa-chevron-right" style="font-size: 0.6rem; color: #dfb162;"></i> News & Updates</a></li>
-                    <li style="margin-bottom: 10px;"><a href="{{ url('/contact') }}" style="color: #94a3b8; text-decoration: none; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 8px; font-size: 0.85rem;" onmouseover="this.style.color='#dfb162'; this.style.transform='translateX(8px)'" onmouseout="this.style.color='#94a3b8'; this.style.transform='translateX(0)'"><i class="fas fa-chevron-right" style="font-size: 0.6rem; color: #dfb162;"></i> Contact Us</a></li>
+                    @php
+                        $footerMenu = \Datlechin\FilamentMenuBuilder\Models\Menu::where('name', 'Footer Menu')->first();
+                        $footerMenuItems = $footerMenu ? $footerMenu->menuItems()->orderBy('order')->get() : [];
+                    @endphp
+                    @if(count($footerMenuItems) > 0)
+                        @foreach($footerMenuItems as $item)
+                        <li style="margin-bottom: 10px;"><a href="{{ $item->url ? url($item->url) : '#' }}" style="color: #94a3b8; text-decoration: none; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 8px; font-size: 0.85rem;" onmouseover="this.style.color='#dfb162'; this.style.transform='translateX(8px)'" onmouseout="this.style.color='#94a3b8'; this.style.transform='translateX(0)'"><i class="fas fa-chevron-right" style="font-size: 0.6rem; color: #dfb162;"></i> {{ $item->title }}</a></li>
+                        @endforeach
+                    @else
+                        <li style="margin-bottom: 10px;"><a href="{{ url('/') }}" style="color: #94a3b8; text-decoration: none; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 8px; font-size: 0.85rem;" onmouseover="this.style.color='#dfb162'; this.style.transform='translateX(8px)'" onmouseout="this.style.color='#94a3b8'; this.style.transform='translateX(0)'"><i class="fas fa-chevron-right" style="font-size: 0.6rem; color: #dfb162;"></i> Home</a></li>
+                    @endif
                 </ul>
             </div>
 
