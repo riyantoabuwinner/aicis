@@ -52,6 +52,7 @@ public static function form(Form $form): Form
                     ->sortable(),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make()->iconButton(),
                 Tables\Actions\DeleteAction::make()->iconButton(),
             ]);

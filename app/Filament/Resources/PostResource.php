@@ -188,6 +188,7 @@ public static function form(Form $form): Form
                     ->iconButton()
                     ->url(fn ($record) => url('/post/' . $record->slug))
                     ->openUrlInNewTab(),
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make()->iconButton(),
                 Tables\Actions\DeleteAction::make()->iconButton(),
             ])

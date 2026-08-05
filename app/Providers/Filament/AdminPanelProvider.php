@@ -18,6 +18,10 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\DeleteAction;
 class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
@@ -100,6 +104,22 @@ class AdminPanelProvider extends PanelProvider
 
     public function boot(): void
     {
+        TextColumn::configureUsing(function (TextColumn $column) {
+            $column->limit(50);
+        });
+        
+        ViewAction::configureUsing(function (ViewAction $action) {
+            $action->iconButton()->tooltip('View');
+        });
+
+        EditAction::configureUsing(function (EditAction $action) {
+            $action->iconButton()->tooltip('Edit');
+        });
+
+        DeleteAction::configureUsing(function (DeleteAction $action) {
+            $action->iconButton()->tooltip('Delete');
+        });
+
         \Filament\Support\Facades\FilamentView::registerRenderHook(
             \Filament\View\PanelsRenderHook::STYLES_AFTER,
             fn (): string => '

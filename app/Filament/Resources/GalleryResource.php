@@ -72,6 +72,7 @@ public static function form(Form $form): Form
                     ->modalContent(fn ($record) => view('filament.pages.actions.file-preview-modal', ['record' => $record]))
                     ->modalSubmitAction(false)
                     ->modalCancelActionLabel('Close'),
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make()->iconButton(),
                 Tables\Actions\DeleteAction::make()->iconButton(),
             ]);
