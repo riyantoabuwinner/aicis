@@ -121,6 +121,8 @@ class UserResource extends Resource
                 Tables\Actions\Action::make('Reset Password')
                     ->icon('heroicon-m-key')
                     ->color('danger')
+                    ->hiddenLabel()
+                    ->tooltip('Reset Password')
                     ->requiresConfirmation()
                     ->form([
                         Forms\Components\TextInput::make('new_password')

@@ -17,6 +17,7 @@ class UserProfile extends Page implements HasForms
 
     protected static ?string $navigationIcon = 'heroicon-o-user';
     protected static ?string $navigationLabel = 'Edit Profile';
+    protected static ?string $navigationGroup = 'Profile';
     protected static ?string $title = 'Edit Profile';
     protected static string $view = 'filament.pages.user-profile';
     protected static ?int $navigationSort = 1;
