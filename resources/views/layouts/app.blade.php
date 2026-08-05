@@ -118,7 +118,7 @@
         @if($siteSettings?->dark_logo)
         <!-- Silhouette Logo -->
         <div style="position: absolute; bottom: 0; right: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; overflow: hidden;">
-            <img src="{{ Storage::url($siteSettings->dark_logo) }}" alt="Silhouette Logo" style="position: absolute; bottom: 20px; right: -20px; height: auto; width: 450px; max-width: 50vw; opacity: 0.08; object-fit: contain; transform: rotate(-5deg);">
+            <img src="{{ Storage::url($siteSettings->dark_logo) }}" alt="Silhouette Logo" style="position: absolute; bottom: 60px; right: 0px; height: auto; width: 450px; max-width: 50vw; opacity: 0.08; object-fit: contain;">
         </div>
         @endif
         
