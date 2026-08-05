@@ -147,10 +147,10 @@
                         @php
                             $color = '#dfb162';
                             $icon = 'fa-circle';
-                            if ($announcement->urgency === 'warning') {
+                            if ($announcement->urgency === 'important') {
                                 $color = '#f59e0b';
                                 $icon = 'fa-exclamation-triangle';
-                            } elseif ($announcement->urgency === 'danger') {
+                            } elseif ($announcement->urgency === 'urgent') {
                                 $color = '#ef4444';
                                 $icon = 'fa-exclamation-circle';
                             }

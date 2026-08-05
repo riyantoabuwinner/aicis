@@ -36,11 +36,11 @@ class AnnouncementResource extends Resource
                     ->columnSpanFull(),
                 Forms\Components\Select::make('urgency')
                     ->options([
-                        'info' => 'Info / Normal',
-                        'warning' => 'Warning (Kuning)',
-                        'danger' => 'Danger / Urgent (Merah)',
+                        'normal' => 'Normal',
+                        'important' => 'Important',
+                        'urgent' => 'Urgent',
                     ])
-                    ->default('info')
+                    ->default('normal')
                     ->required(),
                 Forms\Components\Toggle::make('is_active')
                     ->required()
@@ -68,9 +68,9 @@ class AnnouncementResource extends Resource
                 Tables\Columns\TextColumn::make('urgency')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
-                        'info' => 'info',
-                        'warning' => 'warning',
-                        'danger' => 'danger',
+                        'normal' => 'info',
+                        'important' => 'warning',
+                        'urgent' => 'danger',
                         default => 'gray',
                     }),
                 Tables\Columns\IconColumn::make('is_active')
