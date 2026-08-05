@@ -44,3 +44,14 @@ Route::get('/admin/custom-logout', function () {
     request()->session()->regenerateToken();
     return redirect('/admin/login');
 })->name('admin.custom_logout');
+
+Route::get('/admin/impersonate/{user}', function (\App\Models\User $user) {
+    if (!auth()->check() || !auth()->user()->hasRole('superadmin')) {
+        abort(403);
+    }
+    
+    auth()->login($user);
+    request()->session()->regenerate();
+    
+    return redirect('/admin');
+})->name('admin.impersonate');

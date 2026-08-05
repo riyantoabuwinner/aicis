@@ -158,10 +158,7 @@ class UserResource extends Resource
                     ->icon('heroicon-o-users')
                     ->color('warning')
                     ->visible(fn ($record) => auth()->user()->hasRole('superadmin') && auth()->id() !== $record->id)
-                    ->action(function ($record) {
-                        \Filament\Facades\Filament::auth()->login($record);
-                        return redirect('/admin');
-                    }),
+                    ->url(fn ($record) => route('admin.impersonate', $record->id)),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
