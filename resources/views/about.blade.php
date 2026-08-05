@@ -9,7 +9,7 @@
         <h1 class="section-title">{{ $settings->about_title ?? 'About AICIS' }}</h1>
         
         <div style="max-width: 800px; margin: 0 auto; line-height: 1.8;">
-            <div style="margin-bottom: 20px; font-size: 1.1rem;">
+            <div style="margin-bottom: 20px; text-align: justify;">
                 {!! $settings->about_content ? nl2br(e($settings->about_content)) : 'Information will be updated soon.' !!}
             </div>
             <div style="text-align: center; margin-top: 40px;">
