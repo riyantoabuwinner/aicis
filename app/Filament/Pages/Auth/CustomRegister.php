@@ -15,57 +15,18 @@ class CustomRegister extends BaseRegister
     {
         return $form
             ->schema([
-                \Filament\Forms\Components\FileUpload::make('avatar_url')
-                    ->label('Profile Photo')
-                    ->avatar()
-                    ->directory('avatars'),
-                TextInput::make('front_title')
-                    ->label('Front Title (e.g. Prof., Dr.)')
-                    ->maxLength(255),
                 $this->getNameFormComponent()
                     ->label('Full Name'),
-                TextInput::make('back_title')
-                    ->label('Back Title (e.g. Ph.D, M.Sc)')
-                    ->maxLength(255),
+                
                 $this->getEmailFormComponent()
                     ->label('Email Address'),
+                
                 TextInput::make('whatsapp_number')
                     ->label('WhatsApp Number')
                     ->placeholder('e.g., +6281234567890')
                     ->tel()
                     ->required()
                     ->maxLength(20),
-                \Filament\Forms\Components\Select::make('highest_education')
-                    ->label('Highest Education')
-                    ->options([
-                        'S1' => 'Bachelor (S1)',
-                        'S2' => 'Master (S2)',
-                        'S3' => 'Doctorate (S3)',
-                        'Other' => 'Other',
-                    ])
-                    ->required(),
-                TextInput::make('study_program')
-                    ->label('Study Program')
-                    ->required()
-                    ->maxLength(255),
-                TextInput::make('university')
-                    ->label('University / College')
-                    ->required()
-                    ->maxLength(255),
-                \Filament\Forms\Components\Select::make('institution')
-                    ->label('Institution (Partner)')
-                    ->options(\App\Models\OfficialPartner::pluck('name', 'name'))
-                    ->searchable()
-                    ->required()
-                    ->createOptionForm([
-                        TextInput::make('new_institution')
-                            ->label('Institution Name')
-                            ->required()
-                            ->maxLength(255),
-                    ])
-                    ->createOptionUsing(function (array $data) {
-                        return $data['new_institution'];
-                    }),
                 
                 $this->getPasswordFormComponent()
                     ->rule(
