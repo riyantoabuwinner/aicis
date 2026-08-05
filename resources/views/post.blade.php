@@ -152,22 +152,25 @@
         text-align: justify; /* Force text alignment to justify */
     }
     
-    .article-body-text > p:first-of-type::first-letter {
-        font-family: var(--font-heading);
+    .article-body-text p:first-of-type::first-letter {
+        font-family: var(--font-heading, sans-serif);
         color: #2e7d32; /* Hijau / Green */
-        font-size: 3.8rem; /* Reduced from 4.8rem */
-        line-height: 0.8;
+        font-size: 4rem; 
+        line-height: 1;
         float: left;
-        padding-top: 8px;
-        padding-right: 12px;
-        font-weight: 700;
+        margin-right: 12px;
+        margin-top: 5px;
+        font-weight: bold;
+        text-transform: uppercase;
     }
 
     .article-body-text img {
         width: 100%;
-        height: auto;
+        max-height: 500px;
+        object-fit: contain;
+        background-color: #f1f5f9;
         border-radius: 8px;
-        margin: 20px 0;
+        margin: 25px 0;
     }
 
     .article-body-text p {
