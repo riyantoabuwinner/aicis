@@ -170,10 +170,10 @@ class UserProfile extends Page implements HasForms
                                     $cleanCity = str_ireplace(['Kota ', 'Kab. ', 'Kabupaten '], '', $cityName);
                                     
                                     $response = \Illuminate\Support\Facades\Http::timeout(10)->get('https://kodepos.vercel.app/search?q=' . urlencode(trim($cleanCity)));
-                                    if ($response->successful() && $response->json('status')) {
+                                    if ($response->successful() && $response->json('code') === 'OK') {
                                         $data = $response->json('data');
                                         if (is_array($data) && count($data) > 0) {
-                                            return collect($data)->pluck('postalcode', 'postalcode')->unique()->sort()->toArray();
+                                            return collect($data)->pluck('code', 'code')->unique()->sort()->toArray();
                                         }
                                     }
                                 } catch (\Exception $e) {
