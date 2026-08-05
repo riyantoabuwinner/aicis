@@ -49,9 +49,7 @@ class ManageAboutSettings extends Page implements HasForms
                             ->maxLength(255),
                         \Filament\Forms\Components\Textarea::make('about_content')
                             ->label('Content')
-                            ->maxLength(500)
                             ->rows(4)
-                            ->hint('Max 500 characters')
                             ->columnSpanFull(),
                         TextInput::make('about_button_url')
                             ->label('Read More URL')
