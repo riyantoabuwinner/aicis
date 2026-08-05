@@ -16,9 +16,7 @@
                 Swal.fire({
                     title: 'Profile Update Required!',
                     text: 'You have not completed your profile biodata. Please update your profile to proceed with paper submission.',
-                    imageUrl: '{{ asset("images/facepalm_alert.png") }}',
-                    imageWidth: 200,
-                    imageAlt: 'Facepalm',
+                    icon: 'warning',
                     confirmButtonText: 'Got it, I will update now!',
                     confirmButtonColor: '#1b5e20',
                     customClass: {
