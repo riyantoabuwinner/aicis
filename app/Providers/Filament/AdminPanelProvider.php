@@ -29,11 +29,13 @@ class AdminPanelProvider extends PanelProvider
     {
         $siteTitle = 'AICIS 2026';
         $logoUrl = null;
+        $faviconUrl = null;
         try {
             $setting = \App\Models\Setting::first();
             if ($setting) {
                 $siteTitle = $setting->site_title ?: 'AICIS 2026';
                 $logoUrl = $setting->logo ? \Illuminate\Support\Facades\Storage::url($setting->logo) : null;
+                $faviconUrl = $setting->favicon ? \Illuminate\Support\Facades\Storage::url($setting->favicon) : null;
             }
         } catch (\Exception $e) {
             // Ignore during migrations
@@ -41,6 +43,7 @@ class AdminPanelProvider extends PanelProvider
 
         return $panel
             ->brandName($siteTitle)
+            ->favicon($faviconUrl)
             ->default()
             ->id('admin')
             ->path('admin')
