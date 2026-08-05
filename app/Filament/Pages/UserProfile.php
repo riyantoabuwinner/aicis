@@ -71,25 +71,111 @@ class UserProfile extends Page implements HasForms
                             ->label('Address')
                             ->required()
                             ->columnSpanFull(),
-                        TextInput::make('province')
-                            ->label('Province')
-                            ->required()
-                            ->maxLength(255),
-                        TextInput::make('city')
-                            ->label('City/Regency')
-                            ->required()
-                            ->maxLength(255),
-                        TextInput::make('postal_code')
-                            ->label('Postal Code')
-                            ->required()
-                            ->maxLength(50),
                         \Filament\Forms\Components\Select::make('nationality')
                             ->label('Nationality')
                             ->options([
                                 'Indonesian Citizen' => 'Indonesian Citizen',
                                 'Foreign Citizen' => 'Foreign Citizen',
                             ])
-                            ->required(),
+                            ->required()
+                            ->live(),
+                        TextInput::make('province_text')
+                            ->label('Province')
+                            ->required()
+                            ->maxLength(255)
+                            ->visible(fn (\Filament\Forms\Get $get) => $get('nationality') === 'Foreign Citizen')
+                            ->dehydrated(false)
+                            ->afterStateHydrated(function (TextInput $component, $state, $record) {
+                                if ($record?->nationality === 'Foreign Citizen') {
+                                    $component->state($record->province);
+                                }
+                            })
+                            ->afterStateUpdated(fn ($state, callable $set) => $set('province', $state)),
+                        \Filament\Forms\Components\Select::make('province_select')
+                            ->label('Province')
+                            ->options(fn () => \App\Models\Province::pluck('name', 'name'))
+                            ->required()
+                            ->live()
+                            ->searchable()
+                            ->visible(fn (\Filament\Forms\Get $get) => $get('nationality') !== 'Foreign Citizen')
+                            ->dehydrated(false)
+                            ->afterStateHydrated(function (\Filament\Forms\Components\Select $component, $state, $record) {
+                                if ($record?->nationality !== 'Foreign Citizen') {
+                                    $component->state($record->province);
+                                }
+                            })
+                            ->afterStateUpdated(function ($state, callable $set) {
+                                $set('province', $state);
+                                $set('city_select', null);
+                                $set('postal_code_select', null);
+                            }),
+                        \Filament\Forms\Components\Hidden::make('province'),
+
+                        TextInput::make('city_text')
+                            ->label('City/Regency')
+                            ->required()
+                            ->maxLength(255)
+                            ->visible(fn (\Filament\Forms\Get $get) => $get('nationality') === 'Foreign Citizen')
+                            ->dehydrated(false)
+                            ->afterStateHydrated(function (TextInput $component, $state, $record) {
+                                if ($record?->nationality === 'Foreign Citizen') {
+                                    $component->state($record->city);
+                                }
+                            })
+                            ->afterStateUpdated(fn ($state, callable $set) => $set('city', $state)),
+                        \Filament\Forms\Components\Select::make('city_select')
+                            ->label('City/Regency')
+                            ->options(function (\Filament\Forms\Get $get) {
+                                $province = \App\Models\Province::where('name', $get('province_select'))->first();
+                                if (!$province) return [];
+                                return $province->cities->pluck('name', 'name');
+                            })
+                            ->required()
+                            ->live()
+                            ->searchable()
+                            ->visible(fn (\Filament\Forms\Get $get) => $get('nationality') !== 'Foreign Citizen')
+                            ->dehydrated(false)
+                            ->afterStateHydrated(function (\Filament\Forms\Components\Select $component, $state, $record) {
+                                if ($record?->nationality !== 'Foreign Citizen') {
+                                    $component->state($record->city);
+                                }
+                            })
+                            ->afterStateUpdated(function ($state, callable $set) {
+                                $set('city', $state);
+                                $set('postal_code_select', null);
+                            }),
+                        \Filament\Forms\Components\Hidden::make('city'),
+
+                        TextInput::make('postal_code_text')
+                            ->label('Postal Code')
+                            ->required()
+                            ->maxLength(50)
+                            ->visible(fn (\Filament\Forms\Get $get) => $get('nationality') === 'Foreign Citizen')
+                            ->dehydrated(false)
+                            ->afterStateHydrated(function (TextInput $component, $state, $record) {
+                                if ($record?->nationality === 'Foreign Citizen') {
+                                    $component->state($record->postal_code);
+                                }
+                            })
+                            ->afterStateUpdated(fn ($state, callable $set) => $set('postal_code', $state)),
+                        \Filament\Forms\Components\Select::make('postal_code_select')
+                            ->label('Postal Code')
+                            ->options(function (\Filament\Forms\Get $get) {
+                                $city = \App\Models\City::where('name', $get('city_select'))->first();
+                                if (!$city) return [];
+                                return $city->postalCodes->pluck('postal_code', 'postal_code');
+                            })
+                            ->required()
+                            ->searchable()
+                            ->visible(fn (\Filament\Forms\Get $get) => $get('nationality') !== 'Foreign Citizen')
+                            ->dehydrated(false)
+                            ->afterStateHydrated(function (\Filament\Forms\Components\Select $component, $state, $record) {
+                                if ($record?->nationality !== 'Foreign Citizen') {
+                                    $component->state($record->postal_code);
+                                }
+                            })
+                            ->afterStateUpdated(fn ($state, callable $set) => $set('postal_code', $state)),
+                        \Filament\Forms\Components\Hidden::make('postal_code'),
                         \Filament\Forms\Components\Select::make('highest_education')
                             ->label('Highest Education')
                             ->options([
