@@ -135,7 +135,7 @@
             ->orderBy('sort_order')
             ->get();
     @endphp
-    @if($announcements->count() > 0)
+    
     <div class="announcement-ticker" style="background-color: #063A27; color: #dfb162; padding: 8px 0; border-bottom: 1px solid rgba(223, 177, 98, 0.2); position: relative; z-index: 999; font-size: 0.9rem;">
         <div class="container" style="display: flex; align-items: center;">
             <div style="font-weight: 600; padding-right: 15px; border-right: 1px solid rgba(223, 177, 98, 0.3); z-index: 10; background-color: #063A27; display: flex; align-items: center; gap: 8px; flex-shrink: 0; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">
@@ -143,27 +143,31 @@
             </div>
             <div style="flex-grow: 1; overflow: hidden; white-space: nowrap; padding-left: 15px; position: relative; z-index: 1;">
                 <div class="ticker-content" style="display: inline-block; padding-left: 100%; animation: ticker 25s linear infinite;">
-                    @foreach($announcements as $announcement)
-                        @php
-                            $color = '#dfb162';
-                            $icon = 'fa-circle';
-                            if ($announcement->urgency === 'important') {
-                                $color = '#f59e0b';
-                                $icon = 'fa-exclamation-triangle';
-                            } elseif ($announcement->urgency === 'urgent') {
-                                $color = '#ef4444';
-                                $icon = 'fa-exclamation-circle';
-                            }
-                        @endphp
-                        <span style="margin-right: 50px;">
-                            <i class="fas {{ $icon }}" style="font-size: 0.7rem; margin-right: 8px; vertical-align: middle; color: {{ $color }}; opacity: 0.8;"></i>
-                            @if($announcement->link)
-                                <a href="{{ $announcement->link }}" style="color: {{ $color }}; text-decoration: none; transition: filter 0.3s;" onmouseover="this.style.filter='brightness(1.5)'" onmouseout="this.style.filter='none'">{{ $announcement->text }}</a>
-                            @else
-                                <span style="color: {{ $color }}">{{ $announcement->text }}</span>
-                            @endif
-                        </span>
-                    @endforeach
+                    @if($announcements->count() > 0)
+                        @foreach($announcements as $announcement)
+                            @php
+                                $color = '#dfb162';
+                                $icon = 'fa-circle';
+                                if ($announcement->urgency === 'important') {
+                                    $color = '#f59e0b';
+                                    $icon = 'fa-exclamation-triangle';
+                                } elseif ($announcement->urgency === 'urgent') {
+                                    $color = '#ef4444';
+                                    $icon = 'fa-exclamation-circle';
+                                }
+                            @endphp
+                            <span style="margin-right: 50px;">
+                                <i class="fas {{ $icon }}" style="font-size: 0.7rem; margin-right: 8px; vertical-align: middle; color: {{ $color }}; opacity: 0.8;"></i>
+                                @if($announcement->link)
+                                    <a href="{{ $announcement->link }}" style="color: {{ $color }}; text-decoration: none; transition: filter 0.3s;" onmouseover="this.style.filter='brightness(1.5)'" onmouseout="this.style.filter='none'">{{ $announcement->text }}</a>
+                                @else
+                                    <span style="color: {{ $color }}">{{ $announcement->text }}</span>
+                                @endif
+                            </span>
+                        @endforeach
+                    @else
+                        <span style="color: #dfb162">No active announcements at this moment.</span>
+                    @endif
                 </div>
             </div>
         </div>
