@@ -72,6 +72,15 @@ class AdminPanelProvider extends PanelProvider
                      ->label('User Management'),
                 \Filament\Navigation\NavigationGroup::make()
                      ->label('Site Setting'),
+                \Filament\Navigation\NavigationGroup::make()
+                     ->label('Profile'),
+            ])
+            ->navigationItems([
+                \Filament\Navigation\NavigationItem::make('Log Out')
+                    ->url(fn () => route('admin.custom_logout'))
+                    ->icon('heroicon-o-arrow-right-on-rectangle')
+                    ->group('Profile')
+                    ->sort(999),
             ])
             ->middleware([
                 EncryptCookies::class,

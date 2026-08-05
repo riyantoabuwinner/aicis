@@ -37,3 +37,10 @@ Route::get('/page/{slug}', function ($slug) {
     $page = \App\Models\Page::where('slug', $slug)->where('is_active', true)->firstOrFail();
     return view('page', compact('page'));
 });
+
+Route::get('/admin/custom-logout', function () {
+    auth()->logout();
+    request()->session()->invalidate();
+    request()->session()->regenerateToken();
+    return redirect('/admin/login');
+})->name('admin.custom_logout');
