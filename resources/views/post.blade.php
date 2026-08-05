@@ -152,7 +152,7 @@
         text-align: justify; /* Force text alignment to justify */
     }
     
-    .article-body-text p:first-of-type::first-letter {
+    .article-body-text p.first-text-paragraph::first-letter {
         font-family: var(--font-heading, sans-serif);
         color: #2e7d32; /* Hijau / Green */
         font-size: 4rem; 
@@ -166,11 +166,11 @@
 
     .article-body-text img {
         width: 100%;
-        max-height: 500px;
-        object-fit: contain;
-        background-color: #f1f5f9;
+        max-height: 400px;
+        object-fit: cover;
         border-radius: 8px;
         margin: 25px 0;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
     }
 
     .article-body-text p {
@@ -235,7 +235,8 @@
         .article-meta-bar { flex-direction: column; gap: 15px; }
         .article-content-wrapper { margin-top: -20px; }
         .article-body-text { font-size: 1.1rem; }
-        .article-body-text > p:first-of-type::first-letter { font-size: 4rem; }
+        .article-body-text p.first-text-paragraph::first-letter { font-size: 3.2rem; }
+        .article-body-text img { max-height: 280px; }
     }
 </style>
 
@@ -277,4 +278,21 @@
         </div>
     @endif
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const content = document.querySelector('.article-body-text');
+    if (content) {
+        // Cari semua paragraf
+        const paragraphs = content.querySelectorAll('p');
+        for (let i = 0; i < paragraphs.length; i++) {
+            // Jika paragraf memiliki teks nyata (bukan hanya gambar atau kosong)
+            if (paragraphs[i].textContent.trim().length > 0) {
+                paragraphs[i].classList.add('first-text-paragraph');
+                break; // Berhenti setelah menemukan paragraf teks pertama
+            }
+        }
+    }
+});
+</script>
 @endsection
