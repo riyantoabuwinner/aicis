@@ -136,13 +136,13 @@
             ->get();
     @endphp
     @if($announcements->count() > 0)
-    <div class="announcement-ticker" style="background-color: #063A27; color: #dfb162; padding: 8px 0; overflow: hidden; position: relative; border-bottom: 1px solid rgba(223, 177, 98, 0.2); z-index: 99; font-size: 0.9rem;">
+    <div class="announcement-ticker" style="background-color: #063A27; color: #dfb162; padding: 8px 0; border-bottom: 1px solid rgba(223, 177, 98, 0.2); position: relative; z-index: 999; font-size: 0.9rem;">
         <div class="container" style="display: flex; align-items: center;">
-            <div style="font-weight: 600; padding-right: 15px; border-right: 1px solid rgba(223, 177, 98, 0.3); z-index: 2; background-color: #063A27; display: flex; align-items: center; gap: 8px; flex-shrink: 0; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">
+            <div style="font-weight: 600; padding-right: 15px; border-right: 1px solid rgba(223, 177, 98, 0.3); z-index: 10; background-color: #063A27; display: flex; align-items: center; gap: 8px; flex-shrink: 0; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">
                 <i class="fas fa-bullhorn"></i> Announcement
             </div>
-            <div style="flex-grow: 1; overflow: hidden; position: relative; padding-left: 15px;">
-                <div class="ticker-content" style="display: inline-block; white-space: nowrap; animation: ticker 25s linear infinite;">
+            <div style="flex-grow: 1; overflow: hidden; white-space: nowrap; padding-left: 15px; position: relative; z-index: 1;">
+                <div class="ticker-content" style="display: inline-block; padding-left: 100%; animation: ticker 25s linear infinite;">
                     @foreach($announcements as $announcement)
                         @php
                             $color = '#dfb162';
@@ -173,7 +173,7 @@
             animation-play-state: paused !important;
         }
         @keyframes ticker {
-            0% { transform: translateX(100vw); }
+            0% { transform: translateX(0); }
             100% { transform: translateX(-100%); }
         }
     </style>
