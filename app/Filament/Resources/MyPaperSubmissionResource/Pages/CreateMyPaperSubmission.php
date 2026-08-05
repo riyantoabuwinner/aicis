@@ -20,7 +20,7 @@ class CreateMyPaperSubmission extends CreateRecord
         $user = auth()->user();
         if (!$user->gender || !$user->address || !$user->province || !$user->city || !$user->postal_code || !$user->nationality) {
             session()->flash('show_biodata_modal', true);
-            $this->redirect(\App\Filament\Pages\UserProfile::getUrl());
+            $this->redirect(\App\Filament\Pages\EditProfile::getUrl());
         }
     }
 
