@@ -22,6 +22,11 @@ class AnnouncementResource extends Resource
     protected static ?string $navigationLabel = 'Announcements';
     protected static ?int $navigationSort = 0; // Ensures it's at the top, or it will be sorted alphabetically later
 
+    public static function canAccess(): bool
+    {
+        return auth()->user()->hasRole(['superadmin', 'admin']);
+    }
+
     public static function form(Form $form): Form
     {
         return $form

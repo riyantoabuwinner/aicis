@@ -40,5 +40,6 @@ class AppServiceProvider extends ServiceProvider
         }
 
         \App\Models\PaperSubmission::observe(\App\Observers\PaperSubmissionObserver::class);
+        \Illuminate\Support\Facades\Gate::policy(\Datlechin\FilamentMenuBuilder\Models\Menu::class, \App\Policies\MenuPolicy::class);
     }
 }
