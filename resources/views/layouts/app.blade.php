@@ -122,6 +122,43 @@
         </div>
     </header>
 
+    <!-- Announcements Ticker -->
+    @php
+        $announcements = \App\Models\Announcement::where('is_active', true)->orderBy('sort_order')->get();
+    @endphp
+    @if($announcements->count() > 0)
+    <div class="announcement-ticker" style="background-color: #063A27; color: #dfb162; padding: 8px 0; overflow: hidden; position: relative; border-bottom: 1px solid rgba(223, 177, 98, 0.2); z-index: 99; font-size: 0.9rem;">
+        <div class="container" style="display: flex; align-items: center;">
+            <div style="font-weight: 600; padding-right: 15px; border-right: 1px solid rgba(223, 177, 98, 0.3); z-index: 2; background-color: #063A27; display: flex; align-items: center; gap: 8px; flex-shrink: 0; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">
+                <i class="fas fa-bullhorn"></i> Announcement
+            </div>
+            <div style="flex-grow: 1; overflow: hidden; position: relative; padding-left: 15px;">
+                <div class="ticker-content" style="display: inline-block; white-space: nowrap; animation: ticker 25s linear infinite; padding-left: 100%;">
+                    @foreach($announcements as $announcement)
+                        <span style="margin-right: 50px;">
+                            <i class="fas fa-circle" style="font-size: 0.3rem; margin-right: 10px; vertical-align: middle; opacity: 0.5;"></i>
+                            @if($announcement->link)
+                                <a href="{{ $announcement->link }}" style="color: #dfb162; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#dfb162'">{{ $announcement->text }}</a>
+                            @else
+                                {{ $announcement->text }}
+                            @endif
+                        </span>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        .ticker-content:hover {
+            animation-play-state: paused !important;
+        }
+        @keyframes ticker {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+    </style>
+    @endif
+
     <!-- Main Content -->
     <main>
         @yield('content')
