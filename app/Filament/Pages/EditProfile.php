@@ -29,9 +29,11 @@ class EditProfile extends Page implements HasForms
         if ($user->nationality === 'Foreign Citizen') {
             $data['province_text'] = $user->province;
             $data['city_text'] = $user->city;
+            $data['postal_code_text'] = $user->postal_code;
         } else {
             $data['province_select'] = $user->province;
             $data['city_select'] = $user->city;
+            $data['postal_code_select'] = $user->postal_code;
         }
 
         $this->form->fill($data);
@@ -185,12 +187,53 @@ class EditProfile extends Page implements HasForms
                             })
                             ->afterStateUpdated(function ($state, callable $set) {
                                 $set('city', $state);
+                                $set('postal_code_select', null);
                             }),
                         \Filament\Forms\Components\Hidden::make('city'),
 
-                        TextInput::make('postal_code')
+                        TextInput::make('postal_code_text')
                             ->label('Postal Code')
-                            ->maxLength(50),
+                            ->maxLength(50)
+                            ->visible(fn (\Filament\Forms\Get $get) => $get('nationality') === 'Foreign Citizen')
+                            ->dehydrated(false)
+                            ->afterStateUpdated(fn ($state, callable $set) => $set('postal_code', $state)),
+                        \Filament\Forms\Components\Select::make('postal_code_select')
+                            ->label('Postal Code')
+                            ->options(function (\Filament\Forms\Get $get) {
+                                $cityName = $get('city_select');
+                                if (empty($cityName)) return [];
+                                
+                                try {
+                                    $cleanCity = str_ireplace(['Kota ', 'Kab. ', 'Kabupaten '], '', $cityName);
+                                    $response = \Illuminate\Support\Facades\Http::timeout(10)->get('https://kodepos.vercel.app/search?q=' . urlencode(trim($cleanCity)));
+                                    if ($response->successful() && $response->json('code') === 'OK') {
+                                        $data = $response->json('data');
+                                        if (is_array($data) && count($data) > 0) {
+                                            $codes = collect($data)->pluck('code')->unique()->sort()->values();
+                                            return $codes->combine($codes)->toArray();
+                                        }
+                                    }
+                                } catch (\Exception $e) {}
+                                
+                                return [];
+                            })
+                            ->live()
+                            ->searchable()
+                            ->createOptionForm([
+                                TextInput::make('manual_postal_code')
+                                    ->label('Postal Code')
+                                    ->required()
+                                    ->maxLength(50),
+                            ])
+                            ->createOptionUsing(function (array $data) {
+                                return $data['manual_postal_code'];
+                            })
+                            ->visible(fn (\Filament\Forms\Get $get) => $get('nationality') !== 'Foreign Citizen')
+                            ->dehydrated(false)
+                            ->afterStateUpdated(function ($state, callable $set) {
+                                $set('postal_code', $state);
+                            }),
+                        \Filament\Forms\Components\Hidden::make('postal_code'),
                         \Filament\Forms\Components\Select::make('highest_education')
                             ->label('Highest Education')
                             ->options([
