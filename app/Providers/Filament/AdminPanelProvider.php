@@ -88,7 +88,22 @@ class AdminPanelProvider extends PanelProvider
             ->plugins([
                 FilamentMenuBuilderPlugin::make()
                     ->navigationGroup('Site Setting')
-                    ->navigationSort(5),
+                    ->navigationSort(5)
+                    ->addLocations([
+                        'top-menu' => 'Top Menu',
+                        'main-menu' => 'Main Menu',
+                        'secondary-menu' => 'Secondary Menu',
+                        'footer-menu' => 'Footer Menu',
+                    ])
+                    ->addMenuPanels([
+                        \Datlechin\FilamentMenuBuilder\MenuPanel\StaticMenuPanel::make('Default Pages')
+                            ->add('Home', url('/'))
+                            ->add('About', url('/about'))
+                            ->add('History', url('/history'))
+                            ->add('Contact', url('/contact')),
+                        \Datlechin\FilamentMenuBuilder\MenuPanel\ModelMenuPanel::make()
+                            ->model(\App\Models\Page::class),
+                    ]),
             ])
             ->middleware([
                 EncryptCookies::class,
