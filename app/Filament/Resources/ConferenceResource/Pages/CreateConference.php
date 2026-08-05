@@ -10,4 +10,9 @@ class CreateConference extends CreateRecord
 {
     protected static ?int $navigationSort = 2;
     protected static string $resource = ConferenceResource::class;
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }

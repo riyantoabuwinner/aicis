@@ -10,4 +10,9 @@ class CreatePendingUser extends CreateRecord
 {
     protected static ?int $navigationSort = 11;
     protected static string $resource = PendingUserResource::class;
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }

@@ -10,4 +10,9 @@ class CreatePaperSubmission extends CreateRecord
 {
     protected static ?int $navigationSort = 10;
     protected static string $resource = PaperSubmissionResource::class;
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }
