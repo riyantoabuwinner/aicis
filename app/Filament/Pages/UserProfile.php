@@ -173,7 +173,6 @@ class UserProfile extends Page implements HasForms
 
                         TextInput::make('postal_code')
                             ->label('Postal Code')
-                            ->required()
                             ->maxLength(50),
                         \Filament\Forms\Components\Select::make('highest_education')
                             ->label('Highest Education')
