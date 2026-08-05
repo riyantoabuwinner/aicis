@@ -59,6 +59,29 @@ class UserProfile extends Page implements HasForms
                             ->tel()
                             ->required()
                             ->maxLength(20),
+                        \Filament\Forms\Components\Select::make('gender')
+                            ->label('Gender')
+                            ->options([
+                                'Male' => 'Male',
+                                'Female' => 'Female',
+                            ])
+                            ->required(),
+                        \Filament\Forms\Components\Textarea::make('address')
+                            ->label('Address')
+                            ->required()
+                            ->columnSpanFull(),
+                        TextInput::make('province')
+                            ->label('Province')
+                            ->required()
+                            ->maxLength(255),
+                        TextInput::make('city')
+                            ->label('City/Regency')
+                            ->required()
+                            ->maxLength(255),
+                        TextInput::make('postal_code')
+                            ->label('Postal Code')
+                            ->required()
+                            ->maxLength(50),
                         \Filament\Forms\Components\Select::make('highest_education')
                             ->label('Highest Education')
                             ->options([
@@ -77,7 +100,7 @@ class UserProfile extends Page implements HasForms
                             ->required()
                             ->maxLength(255),
                         \Filament\Forms\Components\Select::make('institution')
-                            ->label('Institution (Partner)')
+                            ->label('Institution/ Affiliation')
                             ->options(\App\Models\OfficialPartner::pluck('name', 'name'))
                             ->searchable()
                             ->required()

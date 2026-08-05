@@ -13,6 +13,23 @@ class CreateMyPaperSubmission extends CreateRecord
 
     protected static string $resource = MyPaperSubmissionResource::class;
 
+    public function mount(): void
+    {
+        parent::mount();
+
+        $user = auth()->user();
+        if (!$user->gender || !$user->address || !$user->province || !$user->city || !$user->postal_code) {
+            \Filament\Notifications\Notification::make()
+                ->title('Update Biodata Required')
+                ->body('Anda belum melakukan update biodata. Harap lakukan update biodata agar dapat melakukan submission.')
+                ->warning()
+                ->persistent()
+                ->send();
+
+            $this->redirect(\App\Filament\Pages\UserProfile::getUrl());
+        }
+    }
+
     protected function mutateFormDataBeforeCreate(array $data): array
     {
         $data['status'] = 'Unassigned'; // Default status when submitted via Wizard
