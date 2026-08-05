@@ -159,8 +159,7 @@ class UserResource extends Resource
                     ->color('warning')
                     ->visible(fn ($record) => auth()->user()->hasRole('superadmin') && auth()->id() !== $record->id)
                     ->action(function ($record) {
-                        auth()->login($record);
-                        session()->save();
+                        \Filament\Facades\Filament::auth()->login($record);
                         return redirect('/admin');
                     }),
             ])
