@@ -158,35 +158,32 @@ class UserProfile extends Page implements HasForms
                                 }
                             })
                             ->afterStateUpdated(fn ($state, callable $set) => $set('postal_code', $state)),
-                        \Filament\Forms\Components\Select::make('postal_code_select')
+                        TextInput::make('postal_code_select')
                             ->label('Postal Code')
-                            ->options(function (\Filament\Forms\Get $get) {
+                            ->datalist(function (\Filament\Forms\Get $get) {
                                 $cityName = $get('city_select');
                                 if (empty($cityName)) return [];
                                 
-                                // Call external API for real-time postal codes because 90k database rows is too heavy
+                                // Call external API for real-time postal codes
                                 try {
-                                    // Remove prefixes like 'Kota ' or 'Kab. ' to improve search accuracy
                                     $cleanCity = str_ireplace(['Kota ', 'Kab. ', 'Kabupaten '], '', $cityName);
-                                    
                                     $response = \Illuminate\Support\Facades\Http::timeout(10)->get('https://kodepos.vercel.app/search?q=' . urlencode(trim($cleanCity)));
                                     if ($response->successful() && $response->json('code') === 'OK') {
                                         $data = $response->json('data');
                                         if (is_array($data) && count($data) > 0) {
-                                            return collect($data)->pluck('code', 'code')->unique()->sort()->toArray();
+                                            return collect($data)->pluck('code')->unique()->sort()->values()->toArray();
                                         }
                                     }
                                 } catch (\Exception $e) {
-                                    // Fallback if API fails
                                 }
                                 
                                 return [];
                             })
                             ->required()
-                            ->searchable()
+                            ->maxLength(50)
                             ->visible(fn (\Filament\Forms\Get $get) => $get('nationality') !== 'Foreign Citizen')
                             ->dehydrated(false)
-                            ->afterStateHydrated(function (\Filament\Forms\Components\Select $component, $state, $record) {
+                            ->afterStateHydrated(function (TextInput $component, $state, $record) {
                                 if ($record && $record->nationality !== 'Foreign Citizen') {
                                     $component->state($record->postal_code);
                                 }
