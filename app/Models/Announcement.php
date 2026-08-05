@@ -14,9 +14,14 @@ class Announcement extends Model
         'link',
         'is_active',
         'sort_order',
+        'start_date',
+        'end_date',
+        'urgency',
     ];
 
     protected $casts = [
         'is_active' => 'boolean',
+        'start_date' => 'datetime',
+        'end_date' => 'datetime',
     ];
 }

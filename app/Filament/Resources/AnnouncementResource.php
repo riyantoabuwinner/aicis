@@ -34,9 +34,23 @@ class AnnouncementResource extends Resource
                     ->url()
                     ->maxLength(255)
                     ->columnSpanFull(),
+                Forms\Components\Select::make('urgency')
+                    ->options([
+                        'info' => 'Info / Normal',
+                        'warning' => 'Warning (Kuning)',
+                        'danger' => 'Danger / Urgent (Merah)',
+                    ])
+                    ->default('info')
+                    ->required(),
                 Forms\Components\Toggle::make('is_active')
                     ->required()
                     ->default(true),
+                Forms\Components\DateTimePicker::make('start_date')
+                    ->label('Tampil Mulai')
+                    ->nullable(),
+                Forms\Components\DateTimePicker::make('end_date')
+                    ->label('Tampil Berakhir (Otomatis Hilang)')
+                    ->nullable(),
                 Forms\Components\TextInput::make('sort_order')
                     ->numeric()
                     ->default(0)
@@ -51,11 +65,24 @@ class AnnouncementResource extends Resource
                 Tables\Columns\TextColumn::make('text')
                     ->searchable()
                     ->limit(50),
-                Tables\Columns\TextColumn::make('link')
-                    ->searchable()
-                    ->limit(30),
+                Tables\Columns\TextColumn::make('urgency')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'info' => 'info',
+                        'warning' => 'warning',
+                        'danger' => 'danger',
+                        default => 'gray',
+                    }),
                 Tables\Columns\IconColumn::make('is_active')
                     ->boolean(),
+                Tables\Columns\TextColumn::make('start_date')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('end_date')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

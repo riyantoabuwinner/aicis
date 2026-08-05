@@ -124,7 +124,16 @@
 
     <!-- Announcements Ticker -->
     @php
-        $announcements = \App\Models\Announcement::where('is_active', true)->orderBy('sort_order')->get();
+        $now = now();
+        $announcements = \App\Models\Announcement::where('is_active', true)
+            ->where(function ($query) use ($now) {
+                $query->whereNull('start_date')->orWhere('start_date', '<=', $now);
+            })
+            ->where(function ($query) use ($now) {
+                $query->whereNull('end_date')->orWhere('end_date', '>=', $now);
+            })
+            ->orderBy('sort_order')
+            ->get();
     @endphp
     @if($announcements->count() > 0)
     <div class="announcement-ticker" style="background-color: #063A27; color: #dfb162; padding: 8px 0; overflow: hidden; position: relative; border-bottom: 1px solid rgba(223, 177, 98, 0.2); z-index: 99; font-size: 0.9rem;">
@@ -135,12 +144,23 @@
             <div style="flex-grow: 1; overflow: hidden; position: relative; padding-left: 15px;">
                 <div class="ticker-content" style="display: inline-block; white-space: nowrap; animation: ticker 25s linear infinite; padding-left: 100%;">
                     @foreach($announcements as $announcement)
+                        @php
+                            $color = '#dfb162';
+                            $icon = 'fa-circle';
+                            if ($announcement->urgency === 'warning') {
+                                $color = '#f59e0b';
+                                $icon = 'fa-exclamation-triangle';
+                            } elseif ($announcement->urgency === 'danger') {
+                                $color = '#ef4444';
+                                $icon = 'fa-exclamation-circle';
+                            }
+                        @endphp
                         <span style="margin-right: 50px;">
-                            <i class="fas fa-circle" style="font-size: 0.3rem; margin-right: 10px; vertical-align: middle; opacity: 0.5;"></i>
+                            <i class="fas {{ $icon }}" style="font-size: 0.7rem; margin-right: 8px; vertical-align: middle; color: {{ $color }}; opacity: 0.8;"></i>
                             @if($announcement->link)
-                                <a href="{{ $announcement->link }}" style="color: #dfb162; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#dfb162'">{{ $announcement->text }}</a>
+                                <a href="{{ $announcement->link }}" style="color: {{ $color }}; text-decoration: none; transition: filter 0.3s;" onmouseover="this.style.filter='brightness(1.5)'" onmouseout="this.style.filter='none'">{{ $announcement->text }}</a>
                             @else
-                                {{ $announcement->text }}
+                                <span style="color: {{ $color }}">{{ $announcement->text }}</span>
                             @endif
                         </span>
                     @endforeach
