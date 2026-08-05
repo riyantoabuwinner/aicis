@@ -58,21 +58,29 @@
 }
 </style>
 
-<div class="custom-lang-dropdown" style="margin-right: 15px;">
-    <div class="current-lang" id="currentLangBtn">
-        <img src="https://flagcdn.com/w20/gb.png" alt="English" id="currentLangFlag" style="width: 20px; border-radius: 2px;">
-        <i class="fas fa-chevron-down" style="font-size: 0.7rem;"></i>
+<div style="display: flex; align-items: center; gap: 15px; margin-right: 15px;">
+    <!-- Dark Mode Toggle -->
+    <div class="dark-mode-toggle" id="customDarkModeToggle" title="Toggle Dark/Light Mode" style="cursor: pointer; display: flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--gray-300, rgba(255,255,255,0.3)); background: var(--white, #fff); color: var(--text-dark, #333); transition: all 0.3s;">
+        <i class="fas fa-moon"></i>
     </div>
-    <div class="lang-options" id="langOptions">
-        <a href="#" class="lang-switch-btn" data-lang="en">
-            <img src="https://flagcdn.com/w20/gb.png" alt="English" style="width: 20px;"> English
-        </a>
-        <a href="#" class="lang-switch-btn" data-lang="id">
-            <img src="https://flagcdn.com/w20/id.png" alt="Indonesia" style="width: 20px;"> Indonesia
-        </a>
-        <a href="#" class="lang-switch-btn" data-lang="ar">
-            <img src="https://flagcdn.com/w20/sa.png" alt="Arabic" style="width: 20px;"> العربية
-        </a>
+
+    <!-- Custom Language Dropdown -->
+    <div class="custom-lang-dropdown">
+        <div class="current-lang" id="currentLangBtn">
+            <img src="https://flagcdn.com/w20/gb.png" alt="English" id="currentLangFlag" style="width: 20px; border-radius: 2px;">
+            <i class="fas fa-chevron-down" style="font-size: 0.7rem;"></i>
+        </div>
+        <div class="lang-options" id="langOptions">
+            <a href="#" class="lang-switch-btn" data-lang="en">
+                <img src="https://flagcdn.com/w20/gb.png" alt="English" style="width: 20px;"> English
+            </a>
+            <a href="#" class="lang-switch-btn" data-lang="id">
+                <img src="https://flagcdn.com/w20/id.png" alt="Indonesia" style="width: 20px;"> Indonesia
+            </a>
+            <a href="#" class="lang-switch-btn" data-lang="ar">
+                <img src="https://flagcdn.com/w20/sa.png" alt="Arabic" style="width: 20px;"> العربية
+            </a>
+        </div>
     </div>
 </div>
 
@@ -87,6 +95,44 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
+        // --- Dark Mode Logic for Filament ---
+        const darkModeToggle = document.getElementById('customDarkModeToggle');
+        const html = document.documentElement;
+        
+        // Ensure initial icon state matches Filament's state
+        if (html.classList.contains('dark') || localStorage.getItem('theme') === 'dark') {
+            if (darkModeToggle) {
+                darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                darkModeToggle.style.background = 'rgba(255,255,255,0.1)';
+                darkModeToggle.style.borderColor = 'rgba(255,255,255,0.1)';
+                darkModeToggle.style.color = '#fff';
+            }
+        }
+
+        if (darkModeToggle) {
+            darkModeToggle.addEventListener('click', () => {
+                // Dispatch Alpine JS event for Filament to handle it properly, 
+                // or just toggle the class manually if Alpine isn't hooked there.
+                html.classList.toggle('dark');
+                
+                if (html.classList.contains('dark')) {
+                    localStorage.setItem('theme', 'dark');
+                    darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                    darkModeToggle.style.background = 'rgba(255,255,255,0.1)';
+                    darkModeToggle.style.borderColor = 'rgba(255,255,255,0.1)';
+                    darkModeToggle.style.color = '#fff';
+                    // Optional: force trigger alpine dark mode
+                    window.dispatchEvent(new CustomEvent('theme-changed', { detail: 'dark' }));
+                } else {
+                    localStorage.setItem('theme', 'light');
+                    darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                    darkModeToggle.style.background = '#fff';
+                    darkModeToggle.style.borderColor = 'rgba(255,255,255,0.3)';
+                    darkModeToggle.style.color = '#333';
+                    window.dispatchEvent(new CustomEvent('theme-changed', { detail: 'light' }));
+                }
+            });
+        }
         // --- Google Translate Logic ---
         const langButtons = document.querySelectorAll('.lang-switch-btn');
         const currentLangBtn = document.getElementById('currentLangBtn');
