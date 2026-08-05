@@ -160,8 +160,8 @@ class UserResource extends Resource
                     ->visible(fn ($record) => auth()->user()->hasRole('superadmin') && auth()->id() !== $record->id)
                     ->action(function ($record) {
                         auth()->login($record);
-                        session()->regenerate();
-                        return redirect()->to('/admin');
+                        session()->save();
+                        return redirect('/admin');
                     }),
             ])
             ->bulkActions([
