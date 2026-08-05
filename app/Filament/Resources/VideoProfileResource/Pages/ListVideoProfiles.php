@@ -8,6 +8,7 @@ use Filament\Resources\Pages\ListRecords;
 
 class ListVideoProfiles extends ListRecords
 {
+    protected static ?int $navigationSort = 57;
     protected static string $resource = VideoProfileResource::class;
 
     protected function getHeaderActions(): array

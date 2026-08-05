@@ -8,6 +8,7 @@ use Filament\Resources\Pages\CreateRecord;
 
 class CreateOfficialPartner extends CreateRecord
 {
+    protected static ?int $navigationSort = 7;
     protected static string $resource = OfficialPartnerResource::class;
 
     protected function getRedirectUrl(): string

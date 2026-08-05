@@ -13,6 +13,7 @@ use Filament\Notifications\Notification;
 
 class UserProfile extends Page implements HasForms
 {
+    protected static ?int $navigationSort = 1;
     use InteractsWithForms;
 
     protected static ?string $navigationIcon = 'heroicon-o-user';
@@ -20,8 +21,6 @@ class UserProfile extends Page implements HasForms
     protected static ?string $navigationGroup = 'Profile';
     protected static ?string $title = 'Edit Profile';
     protected static string $view = 'filament.pages.user-profile';
-    protected static ?int $navigationSort = 1;
-
     public ?array $data = [];
 
     public function mount(): void

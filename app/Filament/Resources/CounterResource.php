@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class CounterResource extends Resource
 {
+    protected static ?int $navigationSort = 2;
     protected static ?string $model = Counter::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-clock';

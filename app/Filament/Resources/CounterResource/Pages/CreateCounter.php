@@ -8,6 +8,7 @@ use Filament\Resources\Pages\CreateRecord;
 
 class CreateCounter extends CreateRecord
 {
+    protected static ?int $navigationSort = 3;
     protected static string $resource = CounterResource::class;
 
     protected function getRedirectUrl(): string

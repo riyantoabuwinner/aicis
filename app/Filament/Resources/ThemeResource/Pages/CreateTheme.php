@@ -8,6 +8,7 @@ use Filament\Resources\Pages\CreateRecord;
 
 class CreateTheme extends CreateRecord
 {
+    protected static ?int $navigationSort = 15;
     protected static string $resource = ThemeResource::class;
 
     protected function getRedirectUrl(): string

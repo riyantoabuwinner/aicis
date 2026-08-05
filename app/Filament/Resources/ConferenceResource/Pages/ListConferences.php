@@ -8,6 +8,7 @@ use Filament\Resources\Pages\ListRecords;
 
 class ListConferences extends ListRecords
 {
+    protected static ?int $navigationSort = 40;
     protected static string $resource = ConferenceResource::class;
 
     protected function getHeaderActions(): array

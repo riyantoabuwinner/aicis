@@ -12,6 +12,7 @@ use Filament\Tables\Table;
 
 class VideoProfileResource extends Resource
 {
+    protected static ?int $navigationSort = 11;
     protected static ?string $model = VideoProfile::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-video-camera';

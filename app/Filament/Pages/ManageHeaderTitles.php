@@ -13,6 +13,7 @@ use App\Models\Setting;
 
 class ManageHeaderTitles extends Page implements HasForms
 {
+    protected static ?int $navigationSort = 3;
     use InteractsWithForms;
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';

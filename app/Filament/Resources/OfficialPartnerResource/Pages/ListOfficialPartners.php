@@ -8,6 +8,7 @@ use Filament\Resources\Pages\ListRecords;
 
 class ListOfficialPartners extends ListRecords
 {
+    protected static ?int $navigationSort = 46;
     protected static string $resource = OfficialPartnerResource::class;
 
     protected function getHeaderActions(): array

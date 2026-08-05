@@ -8,6 +8,7 @@ use Filament\Resources\Pages\ListRecords;
 
 class ListMyPaperSubmissions extends ListRecords
 {
+    protected static ?int $navigationSort = 45;
     protected static string $resource = MyPaperSubmissionResource::class;
 
     protected function getHeaderActions(): array

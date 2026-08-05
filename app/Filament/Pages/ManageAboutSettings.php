@@ -14,6 +14,7 @@ use App\Models\Setting;
 
 class ManageAboutSettings extends Page implements HasForms
 {
+    protected static ?int $navigationSort = 1;
     use InteractsWithForms;
 
     protected static ?string $navigationIcon = 'heroicon-o-information-circle';

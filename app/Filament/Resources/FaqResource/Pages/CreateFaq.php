@@ -8,6 +8,7 @@ use Filament\Resources\Pages\CreateRecord;
 
 class CreateFaq extends CreateRecord
 {
+    protected static ?int $navigationSort = 4;
     protected static string $resource = FaqResource::class;
 
     protected function getRedirectUrl(): string

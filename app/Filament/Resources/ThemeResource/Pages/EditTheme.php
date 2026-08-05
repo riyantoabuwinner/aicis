@@ -8,6 +8,7 @@ use Filament\Resources\Pages\EditRecord;
 
 class EditTheme extends EditRecord
 {
+    protected static ?int $navigationSort = 35;
     protected static string $resource = ThemeResource::class;
 
     protected function getHeaderActions(): array

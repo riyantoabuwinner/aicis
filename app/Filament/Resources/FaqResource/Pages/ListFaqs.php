@@ -8,6 +8,7 @@ use Filament\Resources\Pages\ListRecords;
 
 class ListFaqs extends ListRecords
 {
+    protected static ?int $navigationSort = 42;
     protected static string $resource = FaqResource::class;
 
     protected function getHeaderActions(): array

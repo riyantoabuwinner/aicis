@@ -8,6 +8,7 @@ use Filament\Resources\Pages\EditRecord;
 
 class EditGallery extends EditRecord
 {
+    protected static ?int $navigationSort = 23;
     protected static string $resource = GalleryResource::class;
 
     protected function getRedirectUrl(): string

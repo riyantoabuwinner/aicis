@@ -8,6 +8,7 @@ use Filament\Resources\Pages\ListRecords;
 
 class ListThemes extends ListRecords
 {
+    protected static ?int $navigationSort = 54;
     protected static string $resource = ThemeResource::class;
 
     protected function getHeaderActions(): array

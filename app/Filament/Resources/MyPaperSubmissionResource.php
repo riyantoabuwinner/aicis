@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 
 class MyPaperSubmissionResource extends Resource
 {
+    protected static ?int $navigationSort = 58;
     protected static ?string $model = PaperSubmission::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-document-arrow-up';

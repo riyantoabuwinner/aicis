@@ -10,6 +10,7 @@ use App\Models\Gallery;
 
 class EditPost extends EditRecord
 {
+    protected static ?int $navigationSort = 31;
     protected static string $resource = PostResource::class;
 
     protected function getRedirectUrl(): string

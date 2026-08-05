@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class PaperSubmissionResource extends Resource
 {
+    protected static ?int $navigationSort = 2;
     protected static ?string $model = PaperSubmission::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';

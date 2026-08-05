@@ -8,6 +8,7 @@ use Filament\Resources\Pages\EditRecord;
 
 class EditCounter extends EditRecord
 {
+    protected static ?int $navigationSort = 21;
     protected static string $resource = CounterResource::class;
 
     protected function getHeaderActions(): array

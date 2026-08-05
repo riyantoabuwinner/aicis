@@ -8,6 +8,7 @@ use Filament\Resources\Pages\EditRecord;
 
 class EditFaq extends EditRecord
 {
+    protected static ?int $navigationSort = 22;
     protected static string $resource = FaqResource::class;
 
     protected function getHeaderActions(): array

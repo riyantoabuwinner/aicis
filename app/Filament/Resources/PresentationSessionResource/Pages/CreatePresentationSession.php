@@ -8,5 +8,6 @@ use Filament\Resources\Pages\CreateRecord;
 
 class CreatePresentationSession extends CreateRecord
 {
+    protected static ?int $navigationSort = 13;
     protected static string $resource = PresentationSessionResource::class;
 }

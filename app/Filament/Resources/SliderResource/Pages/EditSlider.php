@@ -8,6 +8,7 @@ use Filament\Resources\Pages\EditRecord;
 
 class EditSlider extends EditRecord
 {
+    protected static ?int $navigationSort = 34;
     protected static string $resource = SliderResource::class;
 
     protected function getHeaderActions(): array

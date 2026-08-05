@@ -8,6 +8,7 @@ use Filament\Resources\Pages\EditRecord;
 
 class EditTimeline extends EditRecord
 {
+    protected static ?int $navigationSort = 36;
     protected static string $resource = TimelineResource::class;
 
     protected function getHeaderActions(): array

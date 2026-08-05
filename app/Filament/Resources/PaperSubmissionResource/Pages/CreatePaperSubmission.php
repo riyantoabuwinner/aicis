@@ -8,5 +8,6 @@ use Filament\Resources\Pages\CreateRecord;
 
 class CreatePaperSubmission extends CreateRecord
 {
+    protected static ?int $navigationSort = 10;
     protected static string $resource = PaperSubmissionResource::class;
 }

@@ -8,6 +8,7 @@ use Filament\Pages\Auth\EditProfile as BaseEditProfile;
 
 class EditProfile extends BaseEditProfile
 {
+    protected static ?int $navigationSort = 33;
     public function form(Form $form): Form
     {
         return $form

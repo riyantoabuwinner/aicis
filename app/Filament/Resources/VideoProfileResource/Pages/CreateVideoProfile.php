@@ -8,6 +8,7 @@ use Filament\Resources\Pages\CreateRecord;
 
 class CreateVideoProfile extends CreateRecord
 {
+    protected static ?int $navigationSort = 18;
     protected static string $resource = VideoProfileResource::class;
 
     protected function getRedirectUrl(): string

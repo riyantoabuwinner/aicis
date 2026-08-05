@@ -8,6 +8,7 @@ use Filament\Resources\Pages\EditRecord;
 
 class EditMyPaperSubmission extends EditRecord
 {
+    protected static ?int $navigationSort = 25;
     protected static string $resource = MyPaperSubmissionResource::class;
 
     protected function getHeaderActions(): array

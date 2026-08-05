@@ -14,6 +14,7 @@ use App\Models\Setting;
 
 class ManageContactSettings extends Page implements HasForms
 {
+    protected static ?int $navigationSort = 2;
     use InteractsWithForms;
 
     protected static ?string $navigationIcon = 'heroicon-o-phone';

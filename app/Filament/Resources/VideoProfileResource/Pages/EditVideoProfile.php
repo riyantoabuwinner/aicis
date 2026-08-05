@@ -8,6 +8,7 @@ use Filament\Resources\Pages\EditRecord;
 
 class EditVideoProfile extends EditRecord
 {
+    protected static ?int $navigationSort = 38;
     protected static string $resource = VideoProfileResource::class;
 
     protected function getHeaderActions(): array

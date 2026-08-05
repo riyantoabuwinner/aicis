@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ConferenceResource extends Resource
 {
+    protected static ?int $navigationSort = 1;
     protected static ?string $model = Conference::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-calendar-days';

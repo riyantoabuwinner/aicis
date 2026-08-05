@@ -8,6 +8,7 @@ use Filament\Resources\Pages\EditRecord;
 
 class EditCategory extends EditRecord
 {
+    protected static ?int $navigationSort = 19;
     protected static string $resource = CategoryResource::class;
 
     protected function getRedirectUrl(): string

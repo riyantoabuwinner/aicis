@@ -8,6 +8,7 @@ use Filament\Resources\Pages\EditRecord;
 
 class EditPendingUser extends EditRecord
 {
+    protected static ?int $navigationSort = 30;
     protected static string $resource = PendingUserResource::class;
 
     protected function getHeaderActions(): array

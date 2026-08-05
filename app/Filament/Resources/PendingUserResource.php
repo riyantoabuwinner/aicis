@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class PendingUserResource extends Resource
 {
+    protected static ?int $navigationSort = 1;
     protected static ?string $model = User::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-clock';

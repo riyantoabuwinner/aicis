@@ -8,6 +8,7 @@ use Filament\Resources\Pages\EditRecord;
 
 class EditMessage extends EditRecord
 {
+    protected static ?int $navigationSort = 24;
     protected static string $resource = MessageResource::class;
 
     protected function getHeaderActions(): array

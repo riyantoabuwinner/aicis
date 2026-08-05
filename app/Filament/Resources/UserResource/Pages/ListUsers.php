@@ -8,6 +8,7 @@ use Filament\Resources\Pages\ListRecords;
 
 class ListUsers extends ListRecords
 {
+    protected static ?int $navigationSort = 56;
     protected static string $resource = UserResource::class;
 
     protected function getHeaderActions(): array

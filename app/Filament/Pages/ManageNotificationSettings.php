@@ -14,6 +14,7 @@ use App\Models\Setting;
 
 class ManageNotificationSettings extends Page implements HasForms
 {
+    protected static ?int $navigationSort = 6;
     use InteractsWithForms;
 
     protected static ?string $navigationIcon = 'heroicon-o-bell';

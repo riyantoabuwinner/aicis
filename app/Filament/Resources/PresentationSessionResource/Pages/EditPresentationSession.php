@@ -8,6 +8,7 @@ use Filament\Resources\Pages\EditRecord;
 
 class EditPresentationSession extends EditRecord
 {
+    protected static ?int $navigationSort = 32;
     protected static string $resource = PresentationSessionResource::class;
 
     protected function getHeaderActions(): array

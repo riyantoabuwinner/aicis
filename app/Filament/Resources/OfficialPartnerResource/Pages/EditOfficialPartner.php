@@ -8,6 +8,7 @@ use Filament\Resources\Pages\EditRecord;
 
 class EditOfficialPartner extends EditRecord
 {
+    protected static ?int $navigationSort = 26;
     protected static string $resource = OfficialPartnerResource::class;
 
     protected function getHeaderActions(): array

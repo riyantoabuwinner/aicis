@@ -8,6 +8,7 @@ use Filament\Resources\Pages\ListRecords;
 
 class ListPresentationSessions extends ListRecords
 {
+    protected static ?int $navigationSort = 52;
     protected static string $resource = PresentationSessionResource::class;
 
     protected function getHeaderActions(): array

@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Storage;
 
 class GalleryResource extends Resource
 {
+    protected static ?int $navigationSort = 4;
     protected static ?string $model = Gallery::class;
     protected static ?string $navigationIcon = 'heroicon-o-photo';
     protected static ?string $navigationGroup = 'Content Management';

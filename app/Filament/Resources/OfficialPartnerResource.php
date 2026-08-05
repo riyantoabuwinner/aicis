@@ -12,6 +12,7 @@ use Filament\Tables\Table;
 
 class OfficialPartnerResource extends Resource
 {
+    protected static ?int $navigationSort = 6;
     protected static ?string $model = OfficialPartner::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-users';

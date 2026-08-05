@@ -13,6 +13,7 @@ use App\Models\Setting;
 
 class ManageSiteSettings extends Page implements HasForms
 {
+    protected static ?int $navigationSort = 4;
     use InteractsWithForms;
 
     protected static ?string $navigationIcon = 'heroicon-o-photo';

@@ -8,6 +8,7 @@ use Filament\Resources\Pages\ListRecords;
 
 class ListCounters extends ListRecords
 {
+    protected static ?int $navigationSort = 41;
     protected static string $resource = CounterResource::class;
 
     protected function getHeaderActions(): array

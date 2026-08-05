@@ -10,6 +10,7 @@ use App\Models\Gallery;
 
 class CreatePost extends CreateRecord
 {
+    protected static ?int $navigationSort = 12;
     protected static string $resource = PostResource::class;
 
     protected function getRedirectUrl(): string

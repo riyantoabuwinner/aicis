@@ -8,5 +8,6 @@ use Filament\Resources\Pages\CreateRecord;
 
 class CreatePaperReview extends CreateRecord
 {
+    protected static ?int $navigationSort = 9;
     protected static string $resource = PaperReviewResource::class;
 }

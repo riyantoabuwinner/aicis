@@ -8,6 +8,7 @@ use Filament\Resources\Pages\CreateRecord;
 
 class CreateSlider extends CreateRecord
 {
+    protected static ?int $navigationSort = 14;
     protected static string $resource = SliderResource::class;
 
     protected function getRedirectUrl(): string

@@ -8,6 +8,7 @@ use Filament\Resources\Pages\CreateRecord;
 
 class CreateUser extends CreateRecord
 {
+    protected static ?int $navigationSort = 17;
     protected static string $resource = UserResource::class;
 
     protected function getRedirectUrl(): string

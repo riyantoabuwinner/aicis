@@ -8,6 +8,7 @@ use Filament\Resources\Pages\ListRecords;
 
 class ListGalleries extends ListRecords
 {
+    protected static ?int $navigationSort = 43;
     protected static string $resource = GalleryResource::class;
 
     protected function getHeaderActions(): array

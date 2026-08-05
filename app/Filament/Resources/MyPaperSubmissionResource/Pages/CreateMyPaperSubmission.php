@@ -8,6 +8,7 @@ use Filament\Resources\Pages\CreateRecord;
 
 class CreateMyPaperSubmission extends CreateRecord
 {
+    protected static ?int $navigationSort = 6;
     use \Filament\Resources\Pages\CreateRecord\Concerns\HasWizard;
 
     protected static string $resource = MyPaperSubmissionResource::class;

@@ -8,6 +8,7 @@ use Filament\Resources\Pages\ListRecords;
 
 class ListTimelines extends ListRecords
 {
+    protected static ?int $navigationSort = 55;
     protected static string $resource = TimelineResource::class;
 
     protected function getHeaderActions(): array

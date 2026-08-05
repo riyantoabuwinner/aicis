@@ -13,6 +13,7 @@ use Illuminate\Support\Str;
 
 class PageResource extends Resource
 {
+    protected static ?int $navigationSort = 9;
     protected static ?string $model = Page::class;
     protected static ?string $navigationIcon = 'heroicon-o-document';
     protected static ?string $navigationGroup = 'Content Management';
