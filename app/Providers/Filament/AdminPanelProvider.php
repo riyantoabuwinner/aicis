@@ -118,18 +118,18 @@ class AdminPanelProvider extends PanelProvider
             $action->iconButton()->tooltip('Delete');
         });
 
-        FilamentView::registerRenderHook(
-            PanelsRenderHook::GLOBAL_SEARCH_AFTER,
-            fn (): \Illuminate\Contracts\View\View => View::make('partials.filament-lang-switcher')
+        \Filament\Support\Facades\FilamentView::registerRenderHook(
+            \Filament\View\PanelsRenderHook::GLOBAL_SEARCH_AFTER,
+            fn (): \Illuminate\Contracts\View\View => \Illuminate\Support\Facades\View::make('partials.filament-lang-switcher')
         );
 
-        FilamentView::registerRenderHook(
-            PanelsRenderHook::BODY_END,
-            fn (): \Illuminate\Contracts\View\View => View::make('partials.floating-bubble')
+        \Filament\Support\Facades\FilamentView::registerRenderHook(
+            \Filament\View\PanelsRenderHook::BODY_END,
+            fn (): \Illuminate\Contracts\View\View => \Illuminate\Support\Facades\View::make('partials.floating-bubble')
         );
 
-        FilamentView::registerRenderHook(
-            PanelsRenderHook::HEAD_END,
+        \Filament\Support\Facades\FilamentView::registerRenderHook(
+            \Filament\View\PanelsRenderHook::HEAD_END,
             fn (): string => '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">'
         );
 
