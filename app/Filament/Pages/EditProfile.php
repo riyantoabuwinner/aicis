@@ -242,6 +242,15 @@ class EditProfile extends Page implements HasForms
                                 'S3' => 'Doctorate (S3)',
                                 'Other' => 'Other',
                             ])
+                            ->afterStateHydrated(function ($component, $state) {
+                                if (in_array($state, ['Bachelor', 'Bachelor (S1)'])) {
+                                    $component->state('S1');
+                                } elseif (in_array($state, ['Master', 'Master (S2)'])) {
+                                    $component->state('S2');
+                                } elseif (in_array($state, ['Doctorate', 'Doctorate (S3)'])) {
+                                    $component->state('S3');
+                                }
+                            })
                             ->required(),
                         TextInput::make('study_program')
                             ->label('Study Program')
