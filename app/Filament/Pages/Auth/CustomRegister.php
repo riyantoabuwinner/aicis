@@ -83,22 +83,30 @@ class CustomRegister extends BaseRegister
         $user = $this->wrapInDatabaseTransaction(fn () => $this->handleRegistration($this->form->getState()));
 
         // Send the registered email
-        \Illuminate\Support\Facades\Mail::to($user->email)->send(new \App\Mail\UserRegisteredMail($user));
+        try {
+            \Illuminate\Support\Facades\Mail::to($user->email)->send(new \App\Mail\UserRegisteredMail($user));
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Registration Mail Error: ' . $e->getMessage());
+        }
 
         // Send notification to admins
-        $admins = \App\Models\User::role(['superadmin', 'admin'])->get();
-        foreach ($admins as $admin) {
-            \Filament\Notifications\Notification::make()
-                ->title('New User Registration')
-                ->body("{$user->name} telah mendaftar dan menunggu persetujuan.")
-                ->icon('heroicon-o-user-plus')
-                ->actions([
-                    \Filament\Notifications\Actions\Action::make('view')
-                        ->label('View Applicant')
-                        ->url(\App\Filament\Resources\PendingUserResource::getUrl('index'))
-                        ->markAsRead(),
-                ])
-                ->sendToDatabase($admin);
+        try {
+            $admins = \App\Models\User::role(['superadmin', 'admin'])->get();
+            foreach ($admins as $admin) {
+                \Filament\Notifications\Notification::make()
+                    ->title('New User Registration')
+                    ->body("{$user->name} telah mendaftar dan menunggu persetujuan.")
+                    ->icon('heroicon-o-user-plus')
+                    ->actions([
+                        \Filament\Notifications\Actions\Action::make('view')
+                            ->label('View Applicant')
+                            ->url(\App\Filament\Resources\PendingUserResource::getUrl('index'))
+                            ->markAsRead(),
+                    ])
+                    ->sendToDatabase($admin);
+            }
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Admin Notification Error: ' . $e->getMessage());
         }
 
         // Redirect to our custom success page
