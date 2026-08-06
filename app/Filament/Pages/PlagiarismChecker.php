@@ -24,6 +24,9 @@ class PlagiarismChecker extends Page implements HasForms
     public bool $isScanning = false;
     public bool $scanComplete = false;
     public ?int $similarityScore = null;
+    public ?int $scannedWords = null;
+    public ?int $matchedSources = null;
+    public ?float $scanDuration = null;
 
     public function mount(): void
     {
@@ -83,7 +86,10 @@ class PlagiarismChecker extends Page implements HasForms
     {
         $this->isScanning = false;
         $this->scanComplete = true;
-        // Generate a random mock score
+        // Generate a random mock score and stats
         $this->similarityScore = rand(5, 28);
+        $this->scannedWords = rand(2500, 8500);
+        $this->matchedSources = rand(2, 15);
+        $this->scanDuration = rand(12, 45) / 10;
     }
 }

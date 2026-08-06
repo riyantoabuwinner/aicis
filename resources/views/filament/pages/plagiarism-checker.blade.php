@@ -101,15 +101,15 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 text-left">
                     <div class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg border border-gray-100 dark:border-gray-700">
                         <div class="text-sm text-gray-500 mb-1">Words Scanned</div>
-                        <div class="font-bold text-xl">{{ rand(2500, 8500) }}</div>
+                        <div class="font-bold text-xl">{{ $scannedWords }}</div>
                     </div>
                     <div class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg border border-gray-100 dark:border-gray-700">
                         <div class="text-sm text-gray-500 mb-1">Sources Found</div>
-                        <div class="font-bold text-xl">{{ rand(2, 15) }}</div>
+                        <div class="font-bold text-xl">{{ $matchedSources }}</div>
                     </div>
                     <div class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg border border-gray-100 dark:border-gray-700">
                         <div class="text-sm text-gray-500 mb-1">Processing Time</div>
-                        <div class="font-bold text-xl">{{ rand(12, 45)/10 }}s</div>
+                        <div class="font-bold text-xl">{{ $scanDuration }}s</div>
                     </div>
                 </div>
                 
