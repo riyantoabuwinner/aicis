@@ -303,9 +303,25 @@ class EditProfile extends Page implements HasForms
     public function save()
     {
         $data = $this->form->getState();
-        auth()->user()->update($data);
+        $user = \App\Models\User::find(auth()->id());
         
-        Notification::make()
+        if ($user->nationality === 'Foreign Citizen') {
+            $data['province'] = $data['province_text'] ?? null;
+            $data['city'] = $data['city_text'] ?? null;
+            $data['postal_code'] = $data['postal_code_text'] ?? null;
+        } else {
+            $data['province'] = $data['province_select'] ?? null;
+            $data['city'] = $data['city_select'] ?? null;
+            $data['postal_code'] = $data['postal_code_select'] ?? null;
+        }
+        
+        if (empty($data['password'])) {
+            unset($data['password']);
+        }
+        
+        $user->update($data);
+        
+        \Filament\Notifications\Notification::make()
             ->success()
             ->title('Profile updated successfully')
             ->send();
