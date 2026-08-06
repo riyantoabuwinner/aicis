@@ -18,8 +18,13 @@
 
         @if (! $scanComplete && ! $isScanning)
             <div class="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-sm ring-1 ring-gray-950/5 dark:ring-white/10">
-                <h2 class="text-xl font-bold mb-4">Plagiarism Checker Simulator</h2>
-                <p class="text-gray-500 mb-6">Upload your document or paste the text content below to check for plagiarism against our comprehensive database of academic publications and web sources.</p>
+                <h2 class="text-xl font-bold mb-4">Plagiarism & Originality Checker</h2>
+                <div class="mb-6 space-y-2">
+                    <p class="text-gray-500">Upload your document or paste the text content below to check for originality.</p>
+                    <p class="text-sm text-gray-500 bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg border border-blue-100 dark:border-blue-800">
+                        <span class="font-semibold text-blue-700 dark:text-blue-400">Methodology:</span> This system utilizes an advanced <strong>Natural Language Processing (NLP)</strong> engine with <strong>TF-IDF & Cosine Similarity</strong> to cross-check your submission against our internal database, as well as executing real-time queries against the global <strong>Crossref Academic Database</strong>.
+                    </p>
+                </div>
                 
                 <form wire:submit="startScan">
                     {{ $this->form }}
