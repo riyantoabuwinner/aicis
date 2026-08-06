@@ -18,9 +18,9 @@ class UserProfile extends Page implements HasInfolists
     use InteractsWithInfolists;
 
     protected static ?string $navigationIcon = 'heroicon-o-user';
-    protected static ?string $navigationLabel = 'Profil';
+    protected static ?string $navigationLabel = 'Profile';
     protected static ?string $navigationGroup = 'Profile';
-    protected static ?string $title = 'Profil Preview';
+    protected static ?string $title = 'Profile Preview';
     protected static string $view = 'filament.pages.user-profile-view';
 
     public function infolist(Infolist $infolist): Infolist
@@ -28,7 +28,7 @@ class UserProfile extends Page implements HasInfolists
         return $infolist
             ->record(auth()->user())
             ->schema([
-                Section::make('Informasi Dasar')
+                Section::make('Basic Information')
                     ->schema([
                         \Filament\Infolists\Components\Group::make([
                             ImageEntry::make('avatar_url')
@@ -54,7 +54,7 @@ class UserProfile extends Page implements HasInfolists
                         ]),
                     ]),
 
-                Section::make('Kontak & Wilayah')
+                Section::make('Contact & Region')
                     ->schema([
                         Grid::make(2)->schema([
                             TextEntry::make('nationality')->label('Nationality'),
@@ -65,7 +65,7 @@ class UserProfile extends Page implements HasInfolists
                         ]),
                     ]),
 
-                Section::make('Akademik & Afiliasi')
+                Section::make('Academic & Affiliation')
                     ->schema([
                         Grid::make(2)->schema([
                             TextEntry::make('highest_education')->label('Highest Education'),
