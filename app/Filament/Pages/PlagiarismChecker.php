@@ -86,10 +86,25 @@ class PlagiarismChecker extends Page implements HasForms
     {
         $this->isScanning = false;
         $this->scanComplete = true;
-        // Generate a random mock score and stats
-        $this->similarityScore = rand(5, 28);
-        $this->scannedWords = rand(2500, 8500);
-        $this->matchedSources = rand(2, 15);
-        $this->scanDuration = rand(12, 45) / 10;
+        
+        $data = $this->form->getState();
+        $content = '';
+        if (!empty($data['document'])) {
+            $content = is_array($data['document']) ? json_encode($data['document']) : (string)$data['document'];
+        } elseif (!empty($data['text_content'])) {
+            $content = $data['text_content'];
+        }
+        
+        if (empty($content)) {
+            $content = 'default';
+        }
+
+        $hash = abs(crc32($content));
+        
+        // Generate deterministic mock score and stats based on input
+        $this->similarityScore = 5 + ($hash % 24); // 5 to 28
+        $this->scannedWords = 2500 + ($hash % 6000);
+        $this->matchedSources = 2 + ($hash % 14);
+        $this->scanDuration = (12 + ($hash % 34)) / 10;
     }
 }
