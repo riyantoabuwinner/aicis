@@ -28,6 +28,15 @@ class CustomRegister extends BaseRegister
                     ->required()
                     ->maxLength(20),
                 
+                \Filament\Forms\Components\Select::make('role')
+                    ->label('Register As')
+                    ->options([
+                        'author' => 'Author (Submit & Present Paper)',
+                        'reviewer' => 'Reviewer (Review Submissions)',
+                    ])
+                    ->default('author')
+                    ->required(),
+                
                 $this->getPasswordFormComponent()
                     ->rule(
                         Password::min(8)
@@ -55,6 +64,18 @@ class CustomRegister extends BaseRegister
             ])
             ->statePath('data');
     }
+
+    protected function handleRegistration(array $data): \Illuminate\Database\Eloquent\Model
+    {
+        $role = $data['role'] ?? 'author';
+        unset($data['role']);
+        
+        $user = parent::handleRegistration($data);
+        $user->assignRole($role);
+        
+        return $user;
+    }
+
     public function register(): ?\Filament\Http\Responses\Auth\Contracts\RegistrationResponse
     {
         $this->rateLimit(2);
