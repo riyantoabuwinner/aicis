@@ -94,7 +94,7 @@
                 </h3>
                 
                 <p class="text-gray-500 dark:text-gray-400 mb-8 max-w-xl mx-auto leading-relaxed">
-                    This document has been checked against our local database of academic submissions using Cosine Similarity NLP. 
+                    This document has been checked against our local database and the global Crossref academic database using Cosine Similarity NLP. 
                     @if($similarityScore > 5) 
                         <br><span class="font-semibold text-gray-700 dark:text-gray-300">Highest Match Found:</span> 
                         "{{ $highestMatchTitle ?? 'Internal Database Document' }}"
