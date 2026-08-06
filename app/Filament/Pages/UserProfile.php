@@ -45,6 +45,9 @@ class UserProfile extends Page implements HasInfolists
                         ])->columnSpanFull(),
                         
                         Grid::make(2)->schema([
+                            TextEntry::make('front_title')->label('Front Title'),
+                            TextEntry::make('name')->label('Full Name'),
+                            TextEntry::make('back_title')->label('Back Title'),
                             TextEntry::make('gender')->label('Gender'),
                         ]),
                     ]),
