@@ -127,22 +127,18 @@
         <div class="mt-12">
             <h3 class="text-xl font-bold text-gray-800 border-b border-gray-200 pb-2 mb-6">Matched Sources ({{ $data['sources'] ?? 0 }})</h3>
             <div class="space-y-4">
-                @for ($i = 1; $i <= ($data['sources'] ?? 3); $i++)
-                    @php
-                        $sourceScore = rand(1, max(1, floor($score / 1.5)));
-                    @endphp
+                @if(($data['sources'] ?? 0) > 0)
                     <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-100">
                         <div class="flex items-center gap-4">
-                            <span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 text-blue-700 font-bold text-sm">{{ $i }}</span>
+                            <span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 text-blue-700 font-bold text-sm">1</span>
                             <div>
-                                <p class="font-semibold text-gray-800">Internet Source / Academic Database</p>
-                                <p class="text-xs text-gray-500">Submitted to multiple cross-check databases</p>
+                                <p class="font-semibold text-gray-800">{{ $data['highest_match'] ?? 'Local AICIS Database Match' }}</p>
+                                <p class="text-xs text-gray-500">Internal Submissions Database</p>
                             </div>
                         </div>
-                        <span class="font-bold text-gray-700">{{ $sourceScore }}%</span>
+                        <span class="font-bold text-gray-700">{{ $score }}%</span>
                     </div>
-                @endfor
-                @if(($data['sources'] ?? 0) == 0)
+                @else
                     <div class="p-8 text-center text-gray-500 border-2 border-dashed border-gray-200 rounded-xl">
                         No matched sources found in the database.
                     </div>

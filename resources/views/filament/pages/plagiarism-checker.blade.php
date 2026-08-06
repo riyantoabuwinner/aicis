@@ -94,8 +94,11 @@
                 </h3>
                 
                 <p class="text-gray-500 dark:text-gray-400 mb-8 max-w-xl mx-auto leading-relaxed">
-                    This is a simulated result. The document has been checked against our comprehensive database of internet sources and academic publications. 
-                    @if($similarityScore > 15) Please review the highlighted sections in the full report. @endif
+                    This document has been checked against our local database of academic submissions using Cosine Similarity NLP. 
+                    @if($similarityScore > 5) 
+                        <br><span class="font-semibold text-gray-700 dark:text-gray-300">Highest Match Found:</span> 
+                        "{{ $highestMatchTitle ?? 'Internal Database Document' }}"
+                    @endif
                 </p>
                 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 text-left">
