@@ -19,8 +19,10 @@ class RoleAndUserSeeder extends Seeder
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
         // Create roles
-        $superadminRole = Role::create(['name' => 'superadmin']);
-        $adminRole = Role::create(['name' => 'admin']);
+        $superadminRole = Role::firstOrCreate(['name' => 'superadmin']);
+        $adminRole = Role::firstOrCreate(['name' => 'admin']);
+        $authorRole = Role::firstOrCreate(['name' => 'author']);
+        $reviewerRole = Role::firstOrCreate(['name' => 'reviewer']);
 
         // Create superadmin user
         $superadmin = User::firstOrCreate(
