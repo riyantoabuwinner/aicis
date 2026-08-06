@@ -75,7 +75,7 @@ class UserProfile extends Page implements HasInfolists
                         ]),
                     ]),
 
-                Section::make('ID Publikasi')
+                Section::make('Publication IDs')
                     ->schema([
                         Grid::make(2)->schema([
                             TextEntry::make('scopus_id')->label('Scopus ID'),
