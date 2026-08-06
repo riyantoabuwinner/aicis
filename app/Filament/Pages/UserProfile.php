@@ -30,14 +30,21 @@ class UserProfile extends Page implements HasInfolists
             ->schema([
                 Section::make('Informasi Dasar')
                     ->schema([
-                        ImageEntry::make('avatar_url')
-                            ->label('Profile Photo')
-                            ->circular()
-                            ->columnSpanFull(),
+                        \Filament\Infolists\Components\Group::make([
+                            ImageEntry::make('avatar_url')
+                                ->hiddenLabel()
+                                ->circular()
+                                ->extraImgAttributes(['class' => 'mx-auto w-32 h-32 object-cover'])
+                                ->extraAttributes(['class' => 'flex justify-center w-full']),
+                            TextEntry::make('full_name')
+                                ->hiddenLabel()
+                                ->size(\Filament\Infolists\Components\TextEntry\TextEntrySize::Large)
+                                ->weight(\Filament\Support\Enums\FontWeight::Bold)
+                                ->extraAttributes(['class' => 'flex justify-center w-full text-center mt-2'])
+                                ->getStateUsing(fn ($record) => $record->getFilamentName()),
+                        ])->columnSpanFull(),
+                        
                         Grid::make(2)->schema([
-                            TextEntry::make('front_title')->label('Front Title'),
-                            TextEntry::make('name')->label('Full Name'),
-                            TextEntry::make('back_title')->label('Back Title'),
                             TextEntry::make('gender')->label('Gender'),
                         ]),
                     ]),
