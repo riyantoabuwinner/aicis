@@ -83,29 +83,42 @@ class CustomRegister extends BaseRegister
         $user = $this->wrapInDatabaseTransaction(fn () => $this->handleRegistration($this->form->getState()));
 
         // Send the registered email
+        // Send the registered email
         try {
             \Illuminate\Support\Facades\Mail::to($user->email)->send(new \App\Mail\UserRegisteredMail($user));
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             \Illuminate\Support\Facades\Log::error('Registration Mail Error: ' . $e->getMessage());
         }
 
         // Send notification to admins
         try {
-            $admins = \App\Models\User::role(['superadmin', 'admin'])->get();
+            // Get admins robustly
+            $admins = \App\Models\User::whereHas('roles', function($q) {
+                $q->whereIn('name', ['superadmin', 'admin']);
+            })->get();
+            
+            // Fallback: If no admins found with roles, at least notify the first user in the database (usually the owner)
+            if ($admins->isEmpty()) {
+                $firstUser = \App\Models\User::first();
+                if ($firstUser) {
+                    $admins->push($firstUser);
+                }
+            }
+
             foreach ($admins as $admin) {
                 \Filament\Notifications\Notification::make()
                     ->title('New User Registration')
-                    ->body("{$user->name} telah mendaftar dan menunggu persetujuan.")
+                    ->body('Seorang pengguna baru telah mendaftar dan menunggu persetujuan.')
                     ->icon('heroicon-o-user-plus')
                     ->actions([
                         \Filament\Notifications\Actions\Action::make('view')
                             ->label('View Applicant')
-                            ->url(\App\Filament\Resources\PendingUserResource::getUrl('index'))
+                            ->url('/admin/pending-users') // hardcode URL to avoid any getUrl() crashes outside context
                             ->markAsRead(),
                     ])
                     ->sendToDatabase($admin);
             }
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             \Illuminate\Support\Facades\Log::error('Admin Notification Error: ' . $e->getMessage());
         }
 
