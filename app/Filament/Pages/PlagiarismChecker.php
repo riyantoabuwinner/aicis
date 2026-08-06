@@ -66,6 +66,19 @@ class PlagiarismChecker extends Page implements HasForms
         $this->scanComplete = false;
     }
 
+    public function downloadReport()
+    {
+        $data = [
+            'score' => $this->similarityScore,
+            'words' => $this->scannedWords,
+            'sources' => $this->matchedSources,
+            'duration' => $this->scanDuration
+        ];
+        
+        session()->put('plagiarism_report', $data);
+        return redirect()->to(route('plagiarism.report'));
+    }
+
     public function completeScan()
     {
         $this->isScanning = false;

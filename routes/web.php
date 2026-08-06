@@ -56,3 +56,14 @@ Route::get('/admin/impersonate/{user}', function (\App\Models\User $user) {
     
     return redirect('/admin');
 })->name('admin.impersonate');
+
+Route::get('/plagiarism-report', function () {
+    if (!session()->has('plagiarism_report')) {
+        return redirect('/admin/plagiarism-checker');
+    }
+    
+    $data = session()->get('plagiarism_report');
+    $user = auth()->user();
+    
+    return view('plagiarism-report', compact('data', 'user'));
+})->middleware(['web', 'auth'])->name('plagiarism.report');

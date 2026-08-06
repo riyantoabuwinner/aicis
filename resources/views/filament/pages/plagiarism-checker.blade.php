@@ -117,7 +117,7 @@
                     <x-filament::button wire:click="$set('scanComplete', false)" color="gray" size="lg" icon="heroicon-o-arrow-path">
                         Scan Another
                     </x-filament::button>
-                    <x-filament::button color="primary" size="lg" icon="heroicon-o-arrow-down-tray" onclick="alert('This is a mockup. PDF report generation is not available in the simulator.')">
+                    <x-filament::button wire:click="downloadReport" color="primary" size="lg" icon="heroicon-o-arrow-down-tray">
                         Download Report
                     </x-filament::button>
                 </div>
