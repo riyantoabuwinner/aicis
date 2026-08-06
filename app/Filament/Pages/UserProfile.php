@@ -49,14 +49,14 @@ class UserProfile extends Page implements HasInfolists
                             TextEntry::make('name')->label('Full Name'),
                             TextEntry::make('back_title')->label('Back Title'),
                             TextEntry::make('gender')->label('Gender'),
+                            TextEntry::make('email')->label('Email Address'),
+                            TextEntry::make('whatsapp_number')->label('WhatsApp Number'),
                         ]),
                     ]),
 
                 Section::make('Kontak & Wilayah')
                     ->schema([
                         Grid::make(2)->schema([
-                            TextEntry::make('email')->label('Email Address'),
-                            TextEntry::make('whatsapp_number')->label('WhatsApp Number'),
                             TextEntry::make('nationality')->label('Nationality'),
                             TextEntry::make('province')->label('Province'),
                             TextEntry::make('city')->label('City/Regency'),
