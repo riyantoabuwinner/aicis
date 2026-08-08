@@ -118,10 +118,7 @@
         width: 100%;
         border-radius: 12px;
         overflow: hidden;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
         margin-bottom: 40px;
-        background: #fff;
-        padding: 8px;
     }
 
     .article-hero-image img {
@@ -207,7 +204,6 @@
     /* Dark Mode Support */
     body.dark-mode .article-content-wrapper { background: #1e293b; box-shadow: 0 15px 35px rgba(0,0,0,0.2); }
     body.dark-mode .article-body-text { color: #d8dee9; }
-    body.dark-mode .article-hero-image { background: #1e293b; box-shadow: 0 25px 50px rgba(0,0,0,0.5); }
     body.dark-mode .article-tags-box { background: #1e293b; border-color: #334155; }
     body.dark-mode .article-tag { background: transparent; border-color: #475569; color: #cbd5e1; }
     
