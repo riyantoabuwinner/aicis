@@ -956,11 +956,7 @@
                         : Storage::url($gallery->file_path);
                 @endphp
                 <img src="{{ $galSrc }}" alt="{{ $gallery->caption }}" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-                @if($gallery->caption)
-                <div style="position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(transparent, rgba(0,0,0,0.9)); color: #fff; padding: 30px 20px 15px;">
-                    <h5 style="margin: 0; font-size: 1.05rem; font-family: var(--font-heading);">{{ $gallery->caption }}</h5>
-                </div>
-                @endif
+
             </div>
             @endforeach
         </div>
@@ -1022,11 +1018,7 @@
                                 : Storage::url($gallery->file_path);
                         @endphp
                         <img src="{{ $galSrc }}" alt="{{ $gallery->caption }}" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-                        @if($gallery->caption)
-                        <div style="position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(transparent, rgba(0,0,0,0.9)); color: #fff; padding: 30px 20px 15px;">
-                            <h5 style="margin: 0; font-size: 1.05rem; font-family: var(--font-heading); text-shadow: 0 2px 4px rgba(0,0,0,0.8);">{{ $gallery->caption }}</h5>
-                        </div>
-                        @endif
+
                     </div>
                     @endforeach
                 </div>

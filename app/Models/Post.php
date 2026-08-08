@@ -46,8 +46,8 @@ class Post extends Model
         });
 
         static::updating(function ($post) {
-            $oldImages = self::extractImages($post->getOriginal('content'), $post->getOriginal('featured_image'));
-            $newImages = self::extractImages($post->content, $post->featured_image);
+            $oldImages = self::extractImages($post->getOriginal('content'));
+            $newImages = self::extractImages($post->content);
             
             $removedImages = array_diff($oldImages, $newImages);
             foreach ($removedImages as $src) {
@@ -56,7 +56,7 @@ class Post extends Model
         });
 
         static::saved(function ($post) {
-            $newImages = self::extractImages($post->content, $post->featured_image);
+            $newImages = self::extractImages($post->content);
             foreach ($newImages as $src) {
                 \App\Models\Gallery::firstOrCreate([
                     'file_path' => self::cleanStorageUrl($src),
@@ -67,14 +67,14 @@ class Post extends Model
         });
 
         static::deleted(function ($post) {
-            $images = self::extractImages($post->content, $post->featured_image);
+            $images = self::extractImages($post->content);
             foreach ($images as $src) {
                 \App\Models\Gallery::where('file_path', self::cleanStorageUrl($src))->delete();
             }
         });
     }
 
-    private static function extractImages($content, $featured_image)
+    private static function extractImages($content)
     {
         $images = [];
         if (!empty($content)) {
@@ -82,9 +82,6 @@ class Post extends Model
             if (!empty($matches[1])) {
                 $images = $matches[1];
             }
-        }
-        if (!empty($featured_image) && !in_array($featured_image, $images)) {
-            $images[] = $featured_image;
         }
         return $images;
     }
