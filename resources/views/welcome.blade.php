@@ -301,6 +301,26 @@
 <!-- Programs & Timeline Section -->
 <section id="programs-timeline" class="section" style="padding: 80px 0; background: url('{{ asset('images/pattern-bg.png') }}'); background-color: #f8f9fa;">
     <div class="container">
+<style>
+    .grid-column-flow {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    @media (min-width: 800px) {
+        .grid-column-flow.themes {
+            grid-template-columns: 1fr 1fr;
+            grid-auto-flow: column;
+            grid-template-rows: repeat({{ ceil($themes->count() / 2) }}, 1fr);
+        }
+        .grid-column-flow.timelines {
+            grid-template-columns: 1fr 1fr;
+            grid-auto-flow: column;
+            grid-template-rows: repeat({{ ceil($timelines->count() / 2) }}, 1fr);
+            gap: 20px;
+        }
+    }
+</style>
         <div style="display: flex; flex-direction: column; gap: 60px;">
             
             @if($themes->count() > 0)
@@ -309,7 +329,7 @@
                 <h2 style="text-align: left; margin-bottom: 10px; color: #1e3a5f; font-size: 1.6rem; font-family: var(--font-heading); font-weight: 500;">Sub Themes</h2>
                 <div style="width: 40px; height: 2px; background-color: var(--accent-color); margin-bottom: 30px;"></div>
                 
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 15px; grid-auto-rows: 1fr;">
+                <div class="grid-column-flow themes">
                     @foreach($themes as $index => $theme)
                     @php
                         $isEven = $index % 2 === 0;
@@ -367,7 +387,7 @@
                 <h2 style="text-align: left; margin-bottom: 10px; color: #1e3a5f; font-size: 1.6rem; font-family: var(--font-heading); font-weight: 500;">Timeline</h2>
                 <div style="width: 40px; height: 2px; background-color: var(--accent-color); margin-bottom: 30px;"></div>
                 
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px;">
+                <div class="grid-column-flow timelines">
                     @foreach($timelines as $timeline)
                     @php
                         $from = \Carbon\Carbon::parse($timeline->date_from);
