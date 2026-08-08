@@ -304,9 +304,9 @@
         <div style="display: flex; flex-wrap: wrap; margin: -15px;">
             
             @if($themes->count() > 0)
-            <!-- Grand Theme Column -->
+            <!-- Sub Themes Column -->
             <div style="flex: 1 1 50%; min-width: 300px; padding: 15px;">
-                <h2 style="text-align: left; margin-bottom: 10px; color: #1e3a5f; font-size: 1.6rem; font-family: var(--font-heading); font-weight: 500;">Grand Theme</h2>
+                <h2 style="text-align: left; margin-bottom: 10px; color: #1e3a5f; font-size: 1.6rem; font-family: var(--font-heading); font-weight: 500;">Sub Themes</h2>
                 <div style="width: 40px; height: 2px; background-color: var(--accent-color); margin-bottom: 30px;"></div>
                 
                 <div style="display: grid; grid-template-columns: 1fr; gap: 12px;">
@@ -353,9 +353,6 @@
                             <h5 style="font-size: 1.05rem; font-weight: 500; margin-bottom: 2px; color: {{ $titleColor }};">{{ $theme->name }}</h5>
                             <p style="color: {{ $descColor }}; font-size: 0.85rem; line-height: 1.4; margin: 0; font-weight: 300;">
                                 {{ \Illuminate\Support\Str::limit($theme->description, 100) }}
-                                @if(strlen($theme->description) > 100)
-                                    <span style="font-style: italic; opacity: 0.8; font-weight: 500; text-decoration: underline;">(Read more)</span>
-                                @endif
                             </p>
                         </div>
                     </div>
