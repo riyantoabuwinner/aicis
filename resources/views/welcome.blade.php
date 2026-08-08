@@ -166,18 +166,17 @@
     <div class="container" style="position: relative; z-index: 2;">
         
         @if(isset($eventTheme))
-        <div style="text-align: center; margin-bottom: 50px; color: #fff;">
-            <h2 style="font-size: 1.6rem; font-weight: 700; color: #dfb162; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px;">
-                {{ $eventTheme->title }}
-            </h2>
-            @if($eventTheme->description)
-            <div style="font-size: 0.95rem; line-height: 1.6; max-width: 800px; margin: 0 auto 20px auto; color: rgba(255,255,255,0.85);">
-                {{ \Illuminate\Support\Str::limit(strip_tags($eventTheme->description), 200) }}
-            </div>
-            <a href="{{ route('theme.show') }}" style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 32px; font-size: 0.9rem; font-weight: 700; color: #021a10; background: linear-gradient(135deg, #dfb162 0%, #f9d877 100%); border-radius: 50px; text-decoration: none; box-shadow: 0 5px 15px rgba(223, 177, 98, 0.3); transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1.5px;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 10px 25px rgba(223, 177, 98, 0.5)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 5px 15px rgba(223, 177, 98, 0.3)';">
-                <span>Detail</span> <i class="fas fa-arrow-right" style="font-size: 0.8rem;"></i>
+        <div style="text-align: center; margin-bottom: 50px;">
+            <a href="{{ route('theme.show') }}" style="text-decoration: none; display: block; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                <h2 style="font-size: 1.6rem; font-weight: 700; color: #dfb162; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px;">
+                    {{ $eventTheme->title }}
+                </h2>
+                @if($eventTheme->description)
+                <div style="font-size: 0.95rem; line-height: 1.6; max-width: 800px; margin: 0 auto; color: rgba(255,255,255,0.85);">
+                    {{ \Illuminate\Support\Str::limit(strip_tags($eventTheme->description), 200) }}
+                </div>
+                @endif
             </a>
-            @endif
         </div>
         @endif
 
