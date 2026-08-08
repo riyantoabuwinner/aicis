@@ -167,13 +167,16 @@
         
         @if(isset($eventTheme))
         <div style="text-align: center; margin-bottom: 50px; color: #fff;">
-            <h2 style="font-size: 2.2rem; font-weight: 700; color: #dfb162; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px;">
+            <h2 style="font-size: 1.6rem; font-weight: 700; color: #dfb162; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px;">
                 {{ $eventTheme->title }}
             </h2>
             @if($eventTheme->description)
-            <div style="font-size: 1.1rem; line-height: 1.6; max-width: 900px; margin: 0 auto; color: rgba(255,255,255,0.9);">
-                {!! $eventTheme->description !!}
+            <div style="font-size: 0.95rem; line-height: 1.6; max-width: 800px; margin: 0 auto 20px auto; color: rgba(255,255,255,0.85);">
+                {{ \Illuminate\Support\Str::limit(strip_tags($eventTheme->description), 200) }}
             </div>
+            <a href="{{ route('theme.show') }}" class="btn btn-outline-light" style="padding: 8px 25px; font-size: 0.9rem; border-color: #dfb162; color: #dfb162; transition: all 0.3s; border-radius: 5px; text-decoration: none; display: inline-block;">
+                Detail Theme
+            </a>
             @endif
         </div>
         @endif
