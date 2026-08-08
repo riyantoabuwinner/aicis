@@ -337,22 +337,22 @@
                         $titleColor = $isEven ? $titleColorEven : $titleColorOdd;
                         $descColor = $isEven ? $descColorEven : $descColorOdd;
                     @endphp
-                    <div class="theme-card-clickable" data-title="{{ $theme->name }}" data-description="{{ $theme->description }}" style="{{ $bgStyle }} padding: 12px 18px; border-radius: 8px; position: relative; overflow: hidden; display: flex; align-items: flex-start; gap: 12px; transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 10px 20px rgba(0,0,0,0.1)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                    <div class="theme-card-clickable" data-title="{{ $theme->name }}" data-description="{{ $theme->description }}" style="{{ $bgStyle }} padding: 10px 14px; border-radius: 8px; position: relative; overflow: hidden; display: flex; align-items: flex-start; gap: 10px; transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 10px 20px rgba(0,0,0,0.1)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
                         <!-- Number Watermark -->
-                        <div style="font-size: 2.5rem; font-weight: 700; color: {{ $numberColor }}; position: absolute; right: 15px; top: 5px; line-height: 1; font-family: var(--font-heading);">
+                        <div style="font-size: 2rem; font-weight: 700; color: {{ $numberColor }}; position: absolute; right: 15px; top: 4px; line-height: 1; font-family: var(--font-heading);">
                             {{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}
                         </div>
                         
                         <!-- Icon -->
-                        <div style="width: 40px; height: 40px; flex-shrink: 0; background: {{ $iconBg }}; color: {{ $iconColor }}; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem;">
+                        <div style="width: 32px; height: 32px; flex-shrink: 0; background: {{ $iconBg }}; color: {{ $iconColor }}; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem;">
                             <i class="fas fa-leaf"></i>
                         </div>
                         
                         <!-- Content -->
                         <div style="position: relative; z-index: 1;">
-                            <h5 style="font-size: 1.05rem; font-weight: 500; margin-bottom: 2px; color: {{ $titleColor }};">{{ $theme->name }}</h5>
-                            <p style="color: {{ $descColor }}; font-size: 0.85rem; line-height: 1.4; margin: 0; font-weight: 300;">
-                                {{ \Illuminate\Support\Str::limit($theme->description, 100) }}
+                            <h5 style="font-size: 0.95rem; font-weight: 500; margin-bottom: 1px; color: {{ $titleColor }}; line-height: 1.2;">{{ $theme->name }}</h5>
+                            <p style="color: {{ $descColor }}; font-size: 0.75rem; line-height: 1.3; margin: 0; font-weight: 300;">
+                                {{ \Illuminate\Support\Str::limit($theme->description, 80) }}
                             </p>
                         </div>
                     </div>
