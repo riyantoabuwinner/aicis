@@ -14,5 +14,6 @@ class Setting extends Model
         'smtp_encryption', 'mail_from_address', 'mail_from_name',
         'whatsapp_number', 'whatsapp_api_key',
         'facebook_url', 'twitter_url', 'instagram_url', 'youtube_url',
+        'copyright',
     ];
 }

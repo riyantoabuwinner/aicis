@@ -160,6 +160,15 @@ class AdminPanelProvider extends PanelProvider
             \Filament\View\PanelsRenderHook::HEAD_END,
             fn (): string => '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">'
         );
+        
+        \Filament\Support\Facades\FilamentView::registerRenderHook(
+            \Filament\View\PanelsRenderHook::FOOTER,
+            fn (): string => '
+                <footer style="text-align: center; padding: 1rem; color: #6b7280; font-size: 0.875rem; margin-top: auto;">
+                    ' . (\App\Models\Setting::first()?->copyright ?? '&copy; 2026 AICIS. All Rights Reserved.') . '
+                </footer>
+            '
+        );
 
         \Filament\Support\Facades\FilamentView::registerRenderHook(
             \Filament\View\PanelsRenderHook::STYLES_AFTER,

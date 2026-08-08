@@ -283,7 +283,7 @@
         <div class="footer-bottom" style="background: rgba(0,0,0,0.4); padding: 20px 0; border-top: 1px solid rgba(255,255,255,0.05); position: relative; z-index: 2;">
             <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
                 <div style="color: #64748b; font-size: 0.8rem;">
-                    &copy; 2026 <strong style="color: #dfb162;">AICIS</strong> - UIN Siber Syekh Nurjati Cirebon. All Rights Reserved.
+                    {!! $siteSettings?->copyright ?? '&copy; 2026 <strong style="color: #dfb162;">AICIS</strong> - UIN Siber Syekh Nurjati Cirebon. All Rights Reserved.' !!}
                 </div>
                 <div style="color: #64748b; font-size: 0.75rem; display: flex; gap: 20px;">
                     <a href="#" style="color: #64748b; text-decoration: none; transition: color 0.3s ease;" onmouseover="this.style.color='#dfb162'" onmouseout="this.style.color='#64748b'">Privacy Policy</a>

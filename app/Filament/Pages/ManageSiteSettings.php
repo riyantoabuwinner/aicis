@@ -74,6 +74,11 @@ class ManageSiteSettings extends Page implements HasForms
                         \Filament\Forms\Components\TextInput::make('site_subtitle')
                             ->label('Site Subtitle 1')
                             ->maxLength(255),
+                            
+                        \Filament\Forms\Components\TextInput::make('copyright')
+                            ->label('Copyright Text')
+                            ->placeholder('e.g. © 2026 AICIS. All rights reserved.')
+                            ->maxLength(255),
                     ]),
             ])
             ->statePath('data');
