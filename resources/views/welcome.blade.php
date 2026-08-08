@@ -309,7 +309,7 @@
                 <h2 style="text-align: left; margin-bottom: 10px; color: #1e3a5f; font-size: 1.6rem; font-family: var(--font-heading); font-weight: 500;">Sub Themes</h2>
                 <div style="width: 40px; height: 2px; background-color: var(--accent-color); margin-bottom: 30px;"></div>
                 
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 15px;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 15px; grid-auto-rows: 1fr;">
                     @foreach($themes as $index => $theme)
                     @php
                         $isEven = $index % 2 === 0;
