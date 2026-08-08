@@ -376,9 +376,13 @@
                         
                         <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 25px;">
                             <!-- Icon -->
-                            <div style="font-size: 2.5rem; color: {{ $iconColor }}; line-height: 1;">
-                                <i class="fas {{ $iconClass }}"></i>
-                            </div>
+                            @if(isset($aboutSettings) && $aboutSettings->dark_logo)
+                                <div style="background-color: {{ $iconColor }}; -webkit-mask-image: url('{{ Storage::url($aboutSettings->dark_logo) }}'); -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: left center; mask-image: url('{{ Storage::url($aboutSettings->dark_logo) }}'); mask-size: contain; mask-repeat: no-repeat; mask-position: left center; width: 80px; height: 40px; margin-top: -5px;"></div>
+                            @else
+                                <div style="font-size: 2.5rem; color: {{ $iconColor }}; line-height: 1;">
+                                    <i class="fas {{ $iconClass }}"></i>
+                                </div>
+                            @endif
                             <!-- Number -->
                             <div style="font-size: 1.8rem; font-weight: 700; color: {{ $numberColor }}; line-height: 1; font-family: var(--font-heading);">
                                 {{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}.
