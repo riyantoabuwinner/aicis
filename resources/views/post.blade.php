@@ -137,23 +137,22 @@
     .article-hero-image::after {
         content: '';
         position: absolute;
-        top: -30px;
-        right: -30px;
-        width: 200px;
-        height: 200px;
-        background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,235,160,0.6) 25%, rgba(255,215,100,0.2) 50%, transparent 70%);
+        top: -40px;
+        right: -40px;
+        width: 250px;
+        height: 250px;
+        background: radial-gradient(circle, rgba(255, 250, 200, 1) 0%, rgba(255, 215, 0, 0.6) 25%, rgba(255, 140, 0, 0.3) 50%, transparent 75%);
         border-radius: 50%;
-        filter: blur(15px);
+        filter: blur(8px) brightness(1.2);
         pointer-events: none;
-        animation: morningSunGlisten 4s infinite alternate ease-in-out;
-        z-index: 10;
-        mix-blend-mode: overlay;
+        animation: morningSunGlisten 3.5s infinite alternate ease-in-out;
+        z-index: 20;
     }
 
     @keyframes morningSunGlisten {
-        0% { transform: scale(0.8) translate(10px, -10px); opacity: 0.5; }
-        50% { opacity: 1; }
-        100% { transform: scale(1.4) translate(-20px, 20px); opacity: 0.8; }
+        0% { transform: scale(0.9) translate(15px, -15px); opacity: 0.6; }
+        50% { opacity: 1; transform: scale(1.1) translate(0, 0); }
+        100% { transform: scale(1.3) translate(-15px, 15px); opacity: 0.8; }
     }
 
     .article-hero-image img {
