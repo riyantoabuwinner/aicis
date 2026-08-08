@@ -66,6 +66,20 @@ class Post extends Model
                 ]);
             }
         });
+
+        static::deleted(function ($post) {
+            preg_match_all('/<img[^>]+src="([^">]+)"/i', $post->content, $matches);
+            $images = $matches[1] ?? [];
+            
+            if (!empty($post->featured_image) && !in_array($post->featured_image, $images)) {
+                $images[] = $post->featured_image;
+            }
+
+            foreach ($images as $src) {
+                $src = self::cleanStorageUrl($src);
+                \App\Models\Gallery::where('file_path', $src)->delete();
+            }
+        });
     }
 
     private static function cleanStorageUrl($src)
