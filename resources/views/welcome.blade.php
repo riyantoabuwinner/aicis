@@ -339,8 +339,8 @@
                     @php
                         $isEven = $index % 2 === 0;
                         
-                        // Dark Blue card (0, 2, 4...)
-                        $bgStyleEven = "background: #243c5a; box-shadow: 0 10px 20px rgba(36, 60, 90, 0.15);";
+                        // Dark Green card (0, 2, 4...)
+                        $bgStyleEven = "background: #0f3014; box-shadow: 0 10px 20px rgba(15, 48, 20, 0.15);";
                         $numberColorEven = "#ffffff"; 
                         $iconColorEven = "#dfb162"; 
                         $titleColorEven = "#ffffff"; 
@@ -348,9 +348,9 @@
                         
                         // Light Gray card (1, 3, 5...)
                         $bgStyleOdd = "background: linear-gradient(135deg, #d1d5db 0%, #f3f4f6 100%); box-shadow: 0 10px 20px rgba(0,0,0,0.05);";
-                        $numberColorOdd = "#243c5a"; 
-                        $iconColorOdd = "#243c5a"; 
-                        $titleColorOdd = "#243c5a"; 
+                        $numberColorOdd = "#0f3014"; 
+                        $iconColorOdd = "#0f3014"; 
+                        $titleColorOdd = "#0f3014"; 
                         $descColorOdd = "#4b5563";
 
                         $bgStyle = $isEven ? $bgStyleEven : $bgStyleOdd;
@@ -360,10 +360,19 @@
                         $descColor = $isEven ? $descColorEven : $descColorOdd;
 
                         // Pick an icon based on index
-                        $icons = ['fa-seedling', 'fa-cogs', 'fa-users', 'fa-recycle'];
+                        $icons = [
+                            'fa-leaf', 
+                            'fa-microchip', 
+                            'fa-balance-scale', 
+                            'fa-chart-line', 
+                            'fa-globe', 
+                            'fa-users', 
+                            'fa-book-open', 
+                            'fa-lightbulb'
+                        ];
                         $iconClass = $icons[$index % count($icons)];
                     @endphp
-                    <div class="theme-card-clickable" data-title="{{ $theme->name }}" data-description="{{ $theme->description }}" style="{{ $bgStyle }} padding: 30px 20px; border-radius: 15px; position: relative; display: flex; flex-direction: column; transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; height: 100%; box-sizing: border-box;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 15px 30px rgba(0,0,0,0.15)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='{{ $isEven ? "0 10px 20px rgba(36, 60, 90, 0.15)" : "0 10px 20px rgba(0,0,0,0.05)" }}';">
+                    <div class="theme-card-clickable" data-title="{{ $theme->name }}" data-description="{{ $theme->description }}" style="{{ $bgStyle }} padding: 30px 20px; border-radius: 15px; position: relative; display: flex; flex-direction: column; transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; height: 100%; box-sizing: border-box;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 15px 30px rgba(0,0,0,0.15)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='{{ $isEven ? "0 10px 20px rgba(15, 48, 20, 0.15)" : "0 10px 20px rgba(0,0,0,0.05)" }}';">
                         
                         <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 25px;">
                             <!-- Icon -->
