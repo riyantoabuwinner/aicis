@@ -10,10 +10,7 @@ Route::get('/about', function () {
     return view('about');
 });
 
-Route::get('/theme', function () {
-    $theme = \App\Models\EventTheme::where('is_active', true)->orderBy('sort_order')->firstOrFail();
-    return view('theme', compact('theme'));
-})->name('theme.show');
+
 
 Route::get('/history', function () {
     return view('history');

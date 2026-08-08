@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
             FaqsTableSeeder::class,
             TimelinesTableSeeder::class,
             PaperSubmissionSeeder::class,
+            ThemePageSeeder::class,
         ]);
 
         \Illuminate\Support\Facades\Schema::enableForeignKeyConstraints();
