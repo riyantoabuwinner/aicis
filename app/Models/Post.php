@@ -58,11 +58,13 @@ class Post extends Model
         static::saved(function ($post) {
             $newImages = self::extractImages($post->content);
             foreach ($newImages as $src) {
-                \App\Models\Gallery::firstOrCreate([
+                $gallery = \App\Models\Gallery::firstOrNew([
                     'file_path' => self::cleanStorageUrl($src),
-                ], [
-                    'caption' => $post->title,
                 ]);
+                $gallery->caption = $post->title;
+                $gallery->created_at = $post->published_at ?? $post->created_at;
+                $gallery->updated_at = $post->updated_at;
+                $gallery->save();
             }
         });
 
