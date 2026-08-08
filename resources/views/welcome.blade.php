@@ -19,6 +19,7 @@
     // New Data Fetching for Homepage
     $timelines = \App\Models\Timeline::where('is_active', true)->orderBy('sort_order')->get();
     $themes = \App\Models\Theme::where('is_active', true)->orderBy('sort_order')->get();
+    $eventTheme = \App\Models\EventTheme::where('is_active', true)->orderBy('sort_order')->first();
     $posts = \App\Models\Post::latest()->take(3)->get();
     $galleries = \App\Models\Gallery::latest()->get();
     $partners = \App\Models\OfficialPartner::where('is_active', true)->orderBy('sort_order')->get();
@@ -163,6 +164,20 @@
     <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(27, 94, 32, 0.85); z-index: 1;"></div>
     
     <div class="container" style="position: relative; z-index: 2;">
+        
+        @if(isset($eventTheme))
+        <div style="text-align: center; margin-bottom: 50px; color: #fff;">
+            <h2 style="font-size: 2.2rem; font-weight: 700; color: #dfb162; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px;">
+                {{ $eventTheme->title }}
+            </h2>
+            @if($eventTheme->description)
+            <div style="font-size: 1.1rem; line-height: 1.6; max-width: 900px; margin: 0 auto; color: rgba(255,255,255,0.9);">
+                {!! $eventTheme->description !!}
+            </div>
+            @endif
+        </div>
+        @endif
+
         <div style="display: flex; flex-wrap: wrap; margin: -15px; align-items: center;">
             
             <!-- Countdown Side -->
