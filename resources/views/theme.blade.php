@@ -117,7 +117,6 @@
     .article-hero-image {
         width: 100%;
         border-radius: 12px;
-        overflow: hidden;
         margin-bottom: 40px;
         position: relative;
     }
@@ -150,7 +149,7 @@
         height: auto;
         max-height: 500px;
         object-fit: cover;
-        border-radius: 6px;
+        border-radius: 12px;
         display: block;
     }
 

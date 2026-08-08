@@ -118,7 +118,10 @@
     .article-content-wrapper {
         max-width: 860px;
         margin: -40px auto 100px auto; /* Pull content up slightly overlapping the header */
-        padding: 0 20px;
+        padding: 40px;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.05);
         position: relative;
         z-index: 5;
     }
@@ -126,11 +129,31 @@
     .article-hero-image {
         width: 100%;
         border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
         margin-bottom: 40px;
-        background: #fff;
-        padding: 8px;
+        position: relative;
+    }
+
+    /* Morning Sunlight Glistening Animation */
+    .article-hero-image::after {
+        content: '';
+        position: absolute;
+        top: -30px;
+        right: -30px;
+        width: 200px;
+        height: 200px;
+        background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,235,160,0.6) 25%, rgba(255,215,100,0.2) 50%, transparent 70%);
+        border-radius: 50%;
+        filter: blur(15px);
+        pointer-events: none;
+        animation: morningSunGlisten 4s infinite alternate ease-in-out;
+        z-index: 10;
+        mix-blend-mode: overlay;
+    }
+
+    @keyframes morningSunGlisten {
+        0% { transform: scale(0.8) translate(10px, -10px); opacity: 0.5; }
+        50% { opacity: 1; }
+        100% { transform: scale(1.4) translate(-20px, 20px); opacity: 0.8; }
     }
 
     .article-hero-image img {
@@ -138,7 +161,7 @@
         height: auto;
         max-height: 500px;
         object-fit: cover;
-        border-radius: 6px;
+        border-radius: 12px;
         display: block;
     }
 
@@ -224,8 +247,8 @@
     }
 
     /* Dark Mode Support */
+    body.dark-mode .article-content-wrapper { background: #1e293b; box-shadow: 0 15px 35px rgba(0,0,0,0.2); }
     body.dark-mode .article-body-text { color: #d8dee9; }
-    body.dark-mode .article-hero-image { background: #1e293b; box-shadow: 0 25px 50px rgba(0,0,0,0.5); }
     body.dark-mode .article-tags-box { background: #1e293b; border-color: #334155; }
     body.dark-mode .article-tag { background: transparent; border-color: #475569; color: #cbd5e1; }
     
