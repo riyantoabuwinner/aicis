@@ -337,7 +337,7 @@
                         $titleColor = $isEven ? $titleColorEven : $titleColorOdd;
                         $descColor = $isEven ? $descColorEven : $descColorOdd;
                     @endphp
-                    <div class="theme-card-clickable" data-title="{{ $theme->name }}" data-description="{{ $theme->description }}" style="{{ $bgStyle }} padding: 10px 14px; border-radius: 8px; position: relative; overflow: hidden; display: flex; align-items: flex-start; gap: 10px; transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 10px 20px rgba(0,0,0,0.1)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                    <div class="theme-card-clickable" data-title="{{ $theme->name }}" data-description="{{ $theme->description }}" style="{{ $bgStyle }} padding: 10px 14px; border-radius: 8px; position: relative; overflow: hidden; display: flex; align-items: flex-start; gap: 10px; transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; height: 100%; box-sizing: border-box;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 10px 20px rgba(0,0,0,0.1)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
                         <!-- Number Watermark -->
                         <div style="font-size: 2rem; font-weight: 700; color: {{ $numberColor }}; position: absolute; right: 15px; top: 4px; line-height: 1; font-family: var(--font-heading);">
                             {{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}
