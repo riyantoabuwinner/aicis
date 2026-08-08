@@ -39,26 +39,4 @@ class CreatePost extends CreateRecord
         return $data;
     }
 
-    protected function afterCreate(): void
-    {
-        $post = $this->record;
-
-        // Process RichEditor Images from Content
-        if ($post->content) {
-            preg_match_all('/src="([^"]+)"/i', $post->content, $matches);
-            if (!empty($matches[1])) {
-                foreach ($matches[1] as $url) {
-                    if (str_contains($url, '/storage/')) {
-                        $path = explode('/storage/', $url)[1];
-                        Gallery::firstOrCreate(['file_path' => $path]);
-                    }
-                }
-            }
-        }
-
-        // Process Featured Image
-        if ($post->featured_image) {
-            Gallery::firstOrCreate(['file_path' => $post->featured_image]);
-        }
-    }
 }
