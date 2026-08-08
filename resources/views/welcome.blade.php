@@ -248,8 +248,7 @@
     <div class="container">
         <div style="display: flex; flex-wrap: wrap; margin: -15px; align-items: center;">
             <div style="flex: 1 1 50%; min-width: 300px; padding: 15px;">
-                <h2 class="section-title" style="text-align: left; margin-bottom: 25px;">{{ $aboutSettings?->about_title ?? 'About AICIS' }}</h2>
-                <div style="width: 40px; height: 3px; background-color: var(--accent-color); margin-bottom: 30px;"></div>
+                <h2 style="font-size: 1.6rem; color: #1e3a5f; font-weight: 500; text-align: left; margin-bottom: 25px;">{{ $aboutSettings?->about_title ?? 'About AICIS' }}</h2>
                 <div style="font-size: 0.95rem; line-height: 1.8; color: var(--text-light); margin-bottom: 35px; text-align: justify;">
                     @if($aboutSettings && $aboutSettings->about_content)
                         {!! nl2br(e(Str::limit(strip_tags($aboutSettings->about_content), 500))) !!}
