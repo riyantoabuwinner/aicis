@@ -13,4 +13,16 @@ class DownloadTemplate extends Page
     protected static ?string $navigationGroup = 'Information';
     
     protected static ?int $navigationSort = 2;
+
+    public static function canAccess(): bool
+    {
+        return !auth()->user()->hasRole(['superadmin', 'admin']);
+    }
+
+    public function getDownloads()
+    {
+        return \App\Models\Download::where('is_active', true)
+            ->orderBy('sort_order')
+            ->get();
+    }
 }

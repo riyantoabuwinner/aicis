@@ -16,20 +16,6 @@ class CustomLogin extends BaseLogin
             ->schema([
                 $this->getEmailFormComponent(),
                 $this->getPasswordFormComponent(),
-                
-                Placeholder::make('captcha_image')
-                    ->label('Security Check')
-                    ->content(new HtmlString('<img src="' . captcha_src('flat') . '" alt="captcha" class="mb-2 rounded" onclick="this.src=\''.captcha_src('flat').'?\' + Math.random()" style="cursor:pointer; margin: 0 auto; display: block;" title="Click to refresh">')),
-                    
-                TextInput::make('captcha')
-                    ->label('Enter Captcha')
-                    ->placeholder('Type the code above')
-                    ->required()
-                    ->rules(['required', 'captcha'])
-                    ->validationMessages([
-                        'captcha' => 'Invalid CAPTCHA code.',
-                    ]),
-
                 $this->getRememberFormComponent(),
             ])
             ->statePath('data');

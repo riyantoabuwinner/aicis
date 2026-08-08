@@ -19,6 +19,11 @@ class ParticipantAnnouncement extends Page
 
     protected static ?int $navigationSort = 0;
 
+    public static function canAccess(): bool
+    {
+        return !auth()->user()->hasRole(['superadmin', 'admin']);
+    }
+
     public function getAnnouncements()
     {
         return Announcement::where('is_active', true)

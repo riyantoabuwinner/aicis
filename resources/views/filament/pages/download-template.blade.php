@@ -1,22 +1,18 @@
 <x-filament-panels::page>
     <x-filament::card>
         <div class="prose max-w-none">
-            <h2>Download Templates</h2>
-            <p>Please use the official templates below to prepare your manuscript.</p>
+            <h2>Download Files</h2>
+            <p>Please find the available templates and files below.</p>
             
             <div style="margin-top: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap;">
-                <x-filament::button tag="a" href="#" icon="heroicon-o-document-arrow-down" color="primary">
-                    Download English Template (DOCX)
-                </x-filament::button>
-                
-                <x-filament::button tag="a" href="#" icon="heroicon-o-document-arrow-down" color="success">
-                    Download Arabic Template (DOCX)
-                </x-filament::button>
+                @forelse($this->getDownloads() as $download)
+                    <x-filament::button tag="a" href="{{ \Illuminate\Support\Facades\Storage::url($download->file_path) }}" target="_blank" icon="heroicon-o-document-arrow-down" color="primary">
+                        {{ $download->title }}
+                    </x-filament::button>
+                @empty
+                    <p style="color: gray;">No downloadable files available at the moment.</p>
+                @endforelse
             </div>
-            
-            <p style="margin-top: 2rem; font-size: 0.9rem; color: gray;">
-                <em>Note: Actual template files can be linked by updating the href attributes in the view file.</em>
-            </p>
         </div>
     </x-filament::card>
 </x-filament-panels::page>

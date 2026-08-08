@@ -13,4 +13,16 @@ class Guideline extends Page
     protected static ?string $navigationGroup = 'Information';
     
     protected static ?int $navigationSort = 1;
+
+    public static function canAccess(): bool
+    {
+        return !auth()->user()->hasRole(['superadmin', 'admin']);
+    }
+
+    public function getGuidelines()
+    {
+        return \App\Models\Guideline::where('is_active', true)
+            ->orderBy('sort_order')
+            ->get();
+    }
 }

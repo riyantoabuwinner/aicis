@@ -1,15 +1,17 @@
 <x-filament-panels::page>
     <x-filament::card>
         <div class="prose max-w-none">
-            <h2>Submission Guidelines</h2>
-            <p>Welcome to the AICIS submission portal. Please read the following guidelines before submitting your paper:</p>
-            <ul>
-                <li>All papers must be submitted in English or Arabic.</li>
-                <li>The manuscript should be original and not previously published.</li>
-                <li>Follow the provided template strictly.</li>
-                <li>Ensure all author details are correct in the system.</li>
-            </ul>
-            <p>For any questions, please contact the committee.</p>
+            @forelse($this->getGuidelines() as $guideline)
+                <h2>{{ $guideline->title }}</h2>
+                <div class="mt-4">
+                    {!! $guideline->content !!}
+                </div>
+                @if(!$loop->last)
+                    <hr class="my-6">
+                @endif
+            @empty
+                <p>No guidelines available at the moment.</p>
+            @endforelse
         </div>
     </x-filament::card>
 </x-filament-panels::page>
