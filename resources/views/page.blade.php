@@ -126,6 +126,30 @@
         border-radius: 12px;
         overflow: hidden;
         margin-bottom: 40px;
+        position: relative;
+    }
+
+    /* Morning Sunlight Glistening Animation */
+    .article-hero-image::after {
+        content: '';
+        position: absolute;
+        top: -30px;
+        right: -30px;
+        width: 200px;
+        height: 200px;
+        background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,235,160,0.6) 25%, rgba(255,215,100,0.2) 50%, transparent 70%);
+        border-radius: 50%;
+        filter: blur(15px);
+        pointer-events: none;
+        animation: morningSunGlisten 4s infinite alternate ease-in-out;
+        z-index: 10;
+        mix-blend-mode: overlay;
+    }
+
+    @keyframes morningSunGlisten {
+        0% { transform: scale(0.8) translate(10px, -10px); opacity: 0.5; }
+        50% { opacity: 1; }
+        100% { transform: scale(1.4) translate(-20px, 20px); opacity: 0.8; }
     }
 
     .article-hero-image img {
