@@ -22,6 +22,12 @@ class ThemeResource extends Resource
 
     protected static ?string $navigationGroup = 'Event Management';
 
+    protected static ?string $navigationLabel = 'Sub Theme / Scope';
+
+    protected static ?string $modelLabel = 'Sub Theme / Scope';
+
+    protected static ?string $pluralModelLabel = 'Sub Theme / Scope';
+
     
     public static function canAccess(): bool
     {
