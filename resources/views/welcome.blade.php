@@ -314,7 +314,7 @@
     }
     @media (min-width: 1024px) {
         .grid-column-flow.themes {
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(5, 1fr);
         }
     }
     @media (min-width: 800px) {
