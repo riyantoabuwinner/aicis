@@ -29,7 +29,7 @@ Route::get('/registration-success', function () {
 });
 
 Route::get('/posts', function () {
-    $posts = \App\Models\Post::latest()->paginate(9);
+    $posts = \App\Models\Post::orderByRaw('COALESCE(published_at, created_at) DESC')->paginate(9);
     return view('posts', compact('posts'));
 });
 

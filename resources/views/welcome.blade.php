@@ -20,7 +20,7 @@
     $timelines = \App\Models\Timeline::where('is_active', true)->orderBy('sort_order')->get();
     $themes = \App\Models\Theme::where('is_active', true)->orderBy('sort_order')->get();
     $eventTheme = \App\Models\EventTheme::where('is_active', true)->orderBy('sort_order')->first();
-    $posts = \App\Models\Post::latest()->take(3)->get();
+    $posts = \App\Models\Post::orderByRaw('COALESCE(published_at, created_at) DESC')->take(3)->get();
     $galleries = \App\Models\Gallery::latest()->get();
     $partners = \App\Models\OfficialPartner::where('is_active', true)->orderBy('sort_order')->get();
     $faqs = \App\Models\Faq::where('is_active', true)->orderBy('sort_order')->get();
