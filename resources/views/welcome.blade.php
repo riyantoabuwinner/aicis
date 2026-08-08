@@ -174,8 +174,8 @@
             <div style="font-size: 0.95rem; line-height: 1.6; max-width: 800px; margin: 0 auto 20px auto; color: rgba(255,255,255,0.85);">
                 {{ \Illuminate\Support\Str::limit(strip_tags($eventTheme->description), 200) }}
             </div>
-            <a href="{{ route('theme.show') }}" class="btn btn-outline-light" style="padding: 8px 25px; font-size: 0.9rem; border-color: #dfb162; color: #dfb162; transition: all 0.3s; border-radius: 5px; text-decoration: none; display: inline-block;">
-                Detail Theme
+            <a href="{{ route('theme.show') }}" style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 32px; font-size: 0.9rem; font-weight: 700; color: #021a10; background: linear-gradient(135deg, #dfb162 0%, #f9d877 100%); border-radius: 50px; text-decoration: none; box-shadow: 0 5px 15px rgba(223, 177, 98, 0.3); transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1.5px;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 10px 25px rgba(223, 177, 98, 0.5)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 5px 15px rgba(223, 177, 98, 0.3)';">
+                <span>Explore Detail Theme</span> <i class="fas fa-arrow-right" style="font-size: 0.8rem;"></i>
             </a>
             @endif
         </div>
