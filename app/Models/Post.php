@@ -44,6 +44,49 @@ class Post extends Model
                 }
             }
         });
+
+        static::updating(function ($post) {
+            $oldImages = self::extractImages($post->getOriginal('content'), $post->getOriginal('featured_image'));
+            $newImages = self::extractImages($post->content, $post->featured_image);
+            
+            $removedImages = array_diff($oldImages, $newImages);
+            foreach ($removedImages as $src) {
+                \App\Models\Gallery::where('file_path', self::cleanStorageUrl($src))->delete();
+            }
+        });
+
+        static::saved(function ($post) {
+            $newImages = self::extractImages($post->content, $post->featured_image);
+            foreach ($newImages as $src) {
+                \App\Models\Gallery::firstOrCreate([
+                    'file_path' => self::cleanStorageUrl($src),
+                ], [
+                    'caption' => $post->title,
+                ]);
+            }
+        });
+
+        static::deleted(function ($post) {
+            $images = self::extractImages($post->content, $post->featured_image);
+            foreach ($images as $src) {
+                \App\Models\Gallery::where('file_path', self::cleanStorageUrl($src))->delete();
+            }
+        });
+    }
+
+    private static function extractImages($content, $featured_image)
+    {
+        $images = [];
+        if (!empty($content)) {
+            preg_match_all('/<img[^>]+src="([^">]+)"/i', $content, $matches);
+            if (!empty($matches[1])) {
+                $images = $matches[1];
+            }
+        }
+        if (!empty($featured_image) && !in_array($featured_image, $images)) {
+            $images[] = $featured_image;
+        }
+        return $images;
     }
 
     private static function cleanStorageUrl($src)
