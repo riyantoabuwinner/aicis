@@ -337,7 +337,7 @@
                         $titleColor = $isEven ? $titleColorEven : $titleColorOdd;
                         $descColor = $isEven ? $descColorEven : $descColorOdd;
                     @endphp
-                    <div style="{{ $bgStyle }} padding: 12px 18px; border-radius: 8px; position: relative; overflow: hidden; display: flex; align-items: flex-start; gap: 12px; transition: transform 0.3s ease;">
+                    <div class="theme-card-clickable" data-title="{{ htmlspecialchars($theme->name) }}" data-description="{{ htmlspecialchars($theme->description) }}" style="{{ $bgStyle }} padding: 12px 18px; border-radius: 8px; position: relative; overflow: hidden; display: flex; align-items: flex-start; gap: 12px; transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 10px 20px rgba(0,0,0,0.1)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
                         <!-- Number Watermark -->
                         <div style="font-size: 2.5rem; font-weight: 700; color: {{ $numberColor }}; position: absolute; right: 15px; top: 5px; line-height: 1; font-family: var(--font-heading);">
                             {{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}
@@ -351,7 +351,12 @@
                         <!-- Content -->
                         <div style="position: relative; z-index: 1;">
                             <h5 style="font-size: 1.05rem; font-weight: 500; margin-bottom: 2px; color: {{ $titleColor }};">{{ $theme->name }}</h5>
-                            <p style="color: {{ $descColor }}; font-size: 0.85rem; line-height: 1.4; margin: 0; font-weight: 300;">{{ $theme->description }}</p>
+                            <p style="color: {{ $descColor }}; font-size: 0.85rem; line-height: 1.4; margin: 0; font-weight: 300;">
+                                {{ \Illuminate\Support\Str::limit($theme->description, 100) }}
+                                @if(strlen($theme->description) > 100)
+                                    <span style="font-style: italic; opacity: 0.8; font-weight: 500; text-decoration: underline;">(Read more)</span>
+                                @endif
+                            </p>
                         </div>
                     </div>
                     @endforeach
@@ -1324,6 +1329,89 @@
             updateCountdown();
             setInterval(updateCountdown, 1000);
         }
+    });
+</script>
+
+<!-- Theme Modal -->
+<div id="themeModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(5px); opacity: 0; transition: opacity 0.3s ease; align-items: center; justify-content: center;">
+    <div id="themeModalContent" style="background: #fff; width: 90%; max-width: 600px; max-height: 90vh; border-radius: 12px; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); transform: translateY(20px); transition: transform 0.3s ease, width 0.3s ease, max-width 0.3s ease, height 0.3s ease, max-height 0.3s ease; display: flex; flex-direction: column;">
+        
+        <!-- Header -->
+        <div style="padding: 20px 25px; border-bottom: 1px solid #eaeaea; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(135deg, #0f3014 0%, #16421a 100%);">
+            <h3 id="themeModalTitle" style="margin: 0; color: #dfb162; font-size: 1.3rem; font-weight: 600; font-family: var(--font-heading);">Theme Title</h3>
+            <div style="display: flex; gap: 10px;">
+                <button id="themeModalFullscreenBtn" style="background: rgba(255, 255, 255, 0.1); border: none; color: #fff; cursor: pointer; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; transition: background 0.2s;" onmouseover="this.style.background='rgba(255, 255, 255, 0.2)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.1)'"><i class="fas fa-expand"></i></button>
+                <button id="themeModalCloseBtn" style="background: rgba(255, 255, 255, 0.1); border: none; color: #fff; cursor: pointer; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; transition: background 0.2s;" onmouseover="this.style.background='rgba(255, 255, 255, 0.2)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.1)'"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+        
+        <!-- Body -->
+        <div style="padding: 30px 25px; overflow-y: auto; flex-grow: 1; background: #fafafa;">
+            <p id="themeModalDescription" style="margin: 0; color: #444; font-size: 1.05rem; line-height: 1.8; text-align: justify; white-space: pre-wrap; font-family: var(--font-body);"></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const modal = document.getElementById('themeModal');
+        const modalContent = document.getElementById('themeModalContent');
+        const modalTitle = document.getElementById('themeModalTitle');
+        const modalDesc = document.getElementById('themeModalDescription');
+        const closeBtn = document.getElementById('themeModalCloseBtn');
+        const fullscreenBtn = document.getElementById('themeModalFullscreenBtn');
+        let isFullscreen = false;
+
+        document.querySelectorAll('.theme-card-clickable').forEach(card => {
+            card.addEventListener('click', function() {
+                modalTitle.innerText = this.getAttribute('data-title');
+                modalDesc.textContent = this.getAttribute('data-description');
+                
+                modal.style.display = 'flex';
+                // Trigger reflow
+                void modal.offsetWidth;
+                modal.style.opacity = '1';
+                modalContent.style.transform = 'translateY(0)';
+            });
+        });
+
+        const closeModal = () => {
+            modal.style.opacity = '0';
+            modalContent.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                modal.style.display = 'none';
+                if (isFullscreen) toggleFullscreen();
+            }, 300);
+        };
+
+        const toggleFullscreen = () => {
+            isFullscreen = !isFullscreen;
+            if (isFullscreen) {
+                modalContent.style.width = '100%';
+                modalContent.style.maxWidth = '100%';
+                modalContent.style.height = '100%';
+                modalContent.style.maxHeight = '100%';
+                modalContent.style.borderRadius = '0';
+                fullscreenBtn.innerHTML = '<i class="fas fa-compress"></i>';
+            } else {
+                modalContent.style.width = '90%';
+                modalContent.style.maxWidth = '600px';
+                modalContent.style.height = 'auto';
+                modalContent.style.maxHeight = '90vh';
+                modalContent.style.borderRadius = '12px';
+                fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i>';
+            }
+        };
+
+        closeBtn.addEventListener('click', closeModal);
+        fullscreenBtn.addEventListener('click', toggleFullscreen);
+
+        // Close when clicking outside
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
     });
 </script>
 
