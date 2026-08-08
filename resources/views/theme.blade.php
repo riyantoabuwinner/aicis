@@ -230,6 +230,12 @@
 
 <!-- Article Content -->
 <div class="article-content-wrapper">
+    @if($theme->image)
+    <div class="article-hero-image">
+        <img src="{{ \Illuminate\Support\Facades\Storage::url($theme->image) }}" alt="{{ $theme->title }}">
+    </div>
+    @endif
+
     <div class="article-body-text">
         {!! $theme->description !!}
     </div>

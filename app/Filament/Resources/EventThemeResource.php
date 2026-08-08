@@ -41,6 +41,10 @@ class EventThemeResource extends Resource
                             ->maxLength(255),
                         Forms\Components\Toggle::make('is_active')
                             ->default(true),
+                        Forms\Components\FileUpload::make('image')
+                            ->image()
+                            ->directory('event-themes')
+                            ->columnSpanFull(),
                         Forms\Components\RichEditor::make('description')
                             ->columnSpanFull(),
                         Forms\Components\TextInput::make('sort_order')
@@ -66,6 +70,11 @@ class EventThemeResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\Action::make('preview')
+                    ->icon('heroicon-m-eye')
+                    ->iconButton()
+                    ->url(fn (): string => url('theme'))
+                    ->openUrlInNewTab(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])

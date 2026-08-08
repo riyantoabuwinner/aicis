@@ -12,6 +12,7 @@ class EventTheme extends Model
     protected $fillable = [
         'title',
         'description',
+        'image',
         'is_active',
         'sort_order',
     ];
