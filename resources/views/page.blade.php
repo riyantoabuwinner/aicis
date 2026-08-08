@@ -113,7 +113,10 @@
     .article-content-wrapper {
         max-width: 860px;
         margin: -40px auto 100px auto; /* Pull content up slightly overlapping the header */
-        padding: 0 20px;
+        padding: 40px;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.05);
         position: relative;
         z-index: 5;
     }
@@ -209,6 +212,7 @@
     }
 
     /* Dark Mode Support */
+    body.dark-mode .article-content-wrapper { background: #1e293b; box-shadow: 0 15px 35px rgba(0,0,0,0.2); }
     body.dark-mode .article-body-text { color: #d8dee9; }
     body.dark-mode .article-hero-image { background: #1e293b; box-shadow: 0 25px 50px rgba(0,0,0,0.5); }
     body.dark-mode .article-tags-box { background: #1e293b; border-color: #334155; }
