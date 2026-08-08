@@ -1328,5 +1328,4 @@
     });
 </script>
 
-@include('partials.floating-bubble')
 @endsection
