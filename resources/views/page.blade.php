@@ -128,27 +128,7 @@
         position: relative;
     }
 
-    /* Morning Sunlight Glistening Animation */
-    .article-hero-image::after {
-        content: '';
-        position: absolute;
-        top: -40px;
-        right: -40px;
-        width: 250px;
-        height: 250px;
-        background: radial-gradient(circle, rgba(255, 250, 200, 1) 0%, rgba(255, 215, 0, 0.6) 25%, rgba(255, 140, 0, 0.3) 50%, transparent 75%);
-        border-radius: 50%;
-        filter: blur(8px) brightness(1.2);
-        pointer-events: none;
-        animation: morningSunGlisten 3.5s infinite alternate ease-in-out;
-        z-index: 20;
-    }
 
-    @keyframes morningSunGlisten {
-        0% { transform: scale(0.9) translate(15px, -15px); opacity: 0.6; }
-        50% { opacity: 1; transform: scale(1.1) translate(0, 0); }
-        100% { transform: scale(1.3) translate(-15px, 15px); opacity: 0.8; }
-    }
 
     .article-hero-image img {
         width: 100%;
