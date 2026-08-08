@@ -305,14 +305,19 @@
     .grid-column-flow {
         display: grid;
         grid-template-columns: 1fr;
-        gap: 15px;
+        gap: 20px;
     }
-    @media (min-width: 800px) {
+    @media (min-width: 600px) {
         .grid-column-flow.themes {
             grid-template-columns: 1fr 1fr;
-            grid-auto-flow: column;
-            grid-template-rows: repeat({{ ceil($themes->count() / 2) }}, 1fr);
         }
+    }
+    @media (min-width: 1024px) {
+        .grid-column-flow.themes {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+    @media (min-width: 800px) {
         .grid-column-flow.timelines {
             grid-template-columns: 1fr 1fr;
             grid-auto-flow: column;
@@ -334,45 +339,48 @@
                     @php
                         $isEven = $index % 2 === 0;
                         
-                        // Clean Elegant Green
-                        $bgStyleEven = "background: linear-gradient(135deg, #0f3014 0%, #16421a 100%); box-shadow: 0 5px 15px rgba(15, 48, 20, 0.1); border: 1px solid rgba(223, 177, 98, 0.1);";
-                        $numberColorEven = "rgba(255, 255, 255, 0.03)"; 
-                        $iconBgEven = "rgba(223, 177, 98, 0.1)";
+                        // Dark Blue card (0, 2, 4...)
+                        $bgStyleEven = "background: #243c5a; box-shadow: 0 10px 20px rgba(36, 60, 90, 0.15);";
+                        $numberColorEven = "#ffffff"; 
                         $iconColorEven = "#dfb162"; 
-                        $titleColorEven = "#dfb162"; 
-                        $descColorEven = "rgba(255, 255, 255, 0.75)";
+                        $titleColorEven = "#ffffff"; 
+                        $descColorEven = "#e2e8f0";
                         
-                        // Clean Elegant Gold
-                        $bgStyleOdd = "background: linear-gradient(135deg, #dfb162 0%, #c49947 100%); box-shadow: 0 5px 15px rgba(223, 177, 98, 0.15); border: 1px solid rgba(255, 255, 255, 0.2);";
-                        $numberColorOdd = "rgba(15, 48, 20, 0.05)"; 
-                        $iconBgOdd = "rgba(255, 255, 255, 0.3)";
-                        $iconColorOdd = "#0f3014"; 
-                        $titleColorOdd = "#0f3014"; 
-                        $descColorOdd = "rgba(15, 48, 20, 0.85)";
+                        // Light Gray card (1, 3, 5...)
+                        $bgStyleOdd = "background: linear-gradient(135deg, #d1d5db 0%, #f3f4f6 100%); box-shadow: 0 10px 20px rgba(0,0,0,0.05);";
+                        $numberColorOdd = "#243c5a"; 
+                        $iconColorOdd = "#243c5a"; 
+                        $titleColorOdd = "#243c5a"; 
+                        $descColorOdd = "#4b5563";
 
                         $bgStyle = $isEven ? $bgStyleEven : $bgStyleOdd;
                         $numberColor = $isEven ? $numberColorEven : $numberColorOdd;
-                        $iconBg = $isEven ? $iconBgEven : $iconBgOdd;
                         $iconColor = $isEven ? $iconColorEven : $iconColorOdd;
                         $titleColor = $isEven ? $titleColorEven : $titleColorOdd;
                         $descColor = $isEven ? $descColorEven : $descColorOdd;
+
+                        // Pick an icon based on index
+                        $icons = ['fa-seedling', 'fa-cogs', 'fa-users', 'fa-recycle'];
+                        $iconClass = $icons[$index % count($icons)];
                     @endphp
-                    <div class="theme-card-clickable" data-title="{{ $theme->name }}" data-description="{{ $theme->description }}" style="{{ $bgStyle }} padding: 10px 14px; border-radius: 8px; position: relative; overflow: hidden; display: flex; align-items: flex-start; gap: 10px; transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; height: 100%; box-sizing: border-box;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 10px 20px rgba(0,0,0,0.1)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
-                        <!-- Number Watermark -->
-                        <div style="font-size: 2rem; font-weight: 700; color: {{ $numberColor }}; position: absolute; right: 15px; top: 4px; line-height: 1; font-family: var(--font-heading);">
-                            {{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}
-                        </div>
+                    <div class="theme-card-clickable" data-title="{{ $theme->name }}" data-description="{{ $theme->description }}" style="{{ $bgStyle }} padding: 30px 20px; border-radius: 15px; position: relative; display: flex; flex-direction: column; transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; height: 100%; box-sizing: border-box;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 15px 30px rgba(0,0,0,0.15)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='{{ $isEven ? "0 10px 20px rgba(36, 60, 90, 0.15)" : "0 10px 20px rgba(0,0,0,0.05)" }}';">
                         
-                        <!-- Icon -->
-                        <div style="width: 32px; height: 32px; flex-shrink: 0; background: {{ $iconBg }}; color: {{ $iconColor }}; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem;">
-                            <i class="fas fa-leaf"></i>
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 25px;">
+                            <!-- Icon -->
+                            <div style="font-size: 2.5rem; color: {{ $iconColor }}; line-height: 1;">
+                                <i class="fas {{ $iconClass }}"></i>
+                            </div>
+                            <!-- Number -->
+                            <div style="font-size: 1.8rem; font-weight: 700; color: {{ $numberColor }}; line-height: 1; font-family: var(--font-heading);">
+                                {{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}.
+                            </div>
                         </div>
                         
                         <!-- Content -->
-                        <div style="position: relative; z-index: 1;">
-                            <h5 style="font-size: 0.95rem; font-weight: 500; margin-bottom: 1px; color: {{ $titleColor }}; line-height: 1.2;">{{ $theme->name }}</h5>
-                            <p style="color: {{ $descColor }}; font-size: 0.75rem; line-height: 1.3; margin: 0; font-weight: 300;">
-                                {{ \Illuminate\Support\Str::limit($theme->description, 80) }}
+                        <div>
+                            <h5 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 15px; color: {{ $titleColor }}; line-height: 1.3;">{{ $theme->name }}</h5>
+                            <p style="color: {{ $descColor }}; font-size: 0.85rem; line-height: 1.6; margin: 0; font-weight: 400;">
+                                {{ \Illuminate\Support\Str::limit($theme->description, 120) }}
                             </p>
                         </div>
                     </div>
