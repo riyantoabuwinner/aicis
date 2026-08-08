@@ -101,8 +101,8 @@ class PageResource extends Resource
             ])
             ->actions([
                 Tables\Actions\Action::make('preview')
-                    ->label('Preview')
                     ->icon('heroicon-m-eye')
+                    ->iconButton()
                     ->url(fn (Page $record): string => url('page/' . $record->slug))
                     ->openUrlInNewTab(),
                 Tables\Actions\EditAction::make(),
