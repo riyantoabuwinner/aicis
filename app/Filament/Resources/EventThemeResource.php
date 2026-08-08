@@ -17,7 +17,7 @@ class EventThemeResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-light-bulb';
 
-    protected static ?string $navigationGroup = 'Event Management';
+    protected static ?string $navigationGroup = 'Content Management';
 
     protected static ?string $navigationLabel = 'Theme';
 

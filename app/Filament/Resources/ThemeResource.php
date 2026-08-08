@@ -20,7 +20,7 @@ class ThemeResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-swatch';
 
-    protected static ?string $navigationGroup = 'Event Management';
+    protected static ?string $navigationGroup = 'Content Management';
 
     protected static ?string $navigationLabel = 'Sub Theme / Scope';
 
