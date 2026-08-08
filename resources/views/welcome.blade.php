@@ -301,15 +301,15 @@
 <!-- Programs & Timeline Section -->
 <section id="programs-timeline" class="section" style="padding: 80px 0; background: url('{{ asset('images/pattern-bg.png') }}'); background-color: #f8f9fa;">
     <div class="container">
-        <div style="display: flex; flex-wrap: wrap; margin: -15px;">
+        <div style="display: flex; flex-direction: column; gap: 60px;">
             
             @if($themes->count() > 0)
             <!-- Sub Themes Column -->
-            <div style="flex: 1 1 50%; min-width: 300px; padding: 15px;">
+            <div style="width: 100%;">
                 <h2 style="text-align: left; margin-bottom: 10px; color: #1e3a5f; font-size: 1.6rem; font-family: var(--font-heading); font-weight: 500;">Sub Themes</h2>
                 <div style="width: 40px; height: 2px; background-color: var(--accent-color); margin-bottom: 30px;"></div>
                 
-                <div style="display: grid; grid-template-columns: 1fr; gap: 12px;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 15px;">
                     @foreach($themes as $index => $theme)
                     @php
                         $isEven = $index % 2 === 0;
@@ -363,11 +363,11 @@
 
             @if($timelines->count() > 0)
             <!-- Timeline Column -->
-            <div style="flex: 1 1 50%; min-width: 300px; padding: 15px;">
+            <div style="width: 100%;">
                 <h2 style="text-align: left; margin-bottom: 10px; color: #1e3a5f; font-size: 1.6rem; font-family: var(--font-heading); font-weight: 500;">Timeline</h2>
                 <div style="width: 40px; height: 2px; background-color: var(--accent-color); margin-bottom: 30px;"></div>
                 
-                <div style="display: flex; flex-direction: column; gap: 20px;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px;">
                     @foreach($timelines as $timeline)
                     @php
                         $from = \Carbon\Carbon::parse($timeline->date_from);
