@@ -19,7 +19,7 @@
     // New Data Fetching for Homepage
     $timelines = \App\Models\Timeline::where('is_active', true)->orderBy('sort_order')->get();
     $themes = \App\Models\Theme::where('is_active', true)->orderBy('sort_order')->get();
-    $eventTheme = \App\Models\Page::where('slug', 'theme')->where('is_active', true)->first();
+    $eventTheme = \App\Models\EventTheme::where('is_active', true)->orderBy('sort_order')->first();
     $posts = \App\Models\Post::latest()->take(3)->get();
     $galleries = \App\Models\Gallery::latest()->get();
     $partners = \App\Models\OfficialPartner::where('is_active', true)->orderBy('sort_order')->get();
@@ -170,11 +170,11 @@
             <h2 style="font-size: 1.6rem; font-weight: 700; color: #dfb162; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px;">
                 {{ $eventTheme->title }}
             </h2>
-            @if($eventTheme->content)
+            @if($eventTheme->description)
             <div style="font-size: 0.95rem; line-height: 1.6; max-width: 800px; margin: 0 auto 20px auto; color: rgba(255,255,255,0.85);">
-                {{ \Illuminate\Support\Str::limit(strip_tags($eventTheme->content), 200) }}
+                {{ \Illuminate\Support\Str::limit(strip_tags($eventTheme->description), 200) }}
             </div>
-            <a href="{{ url('page/theme') }}" class="btn btn-outline-light" style="padding: 8px 25px; font-size: 0.9rem; border-color: #dfb162; color: #dfb162; transition: all 0.3s; border-radius: 5px; text-decoration: none; display: inline-block;">
+            <a href="{{ route('theme.show') }}" class="btn btn-outline-light" style="padding: 8px 25px; font-size: 0.9rem; border-color: #dfb162; color: #dfb162; transition: all 0.3s; border-radius: 5px; text-decoration: none; display: inline-block;">
                 Detail Theme
             </a>
             @endif
