@@ -38,8 +38,11 @@ public static function form(Form $form): Form
                             ->required()
                             ->maxLength(255),
                         Forms\Components\DateTimePicker::make('target_datetime')
-                            ->label('Target Date & Time')
+                            ->label('Start Date & Time')
                             ->required(),
+                        Forms\Components\DateTimePicker::make('until_date')
+                            ->label('Until Date & Time')
+                            ->nullable(),
                         Forms\Components\Toggle::make('is_active')
                             ->default(true),
                         Forms\Components\TextInput::make('sort_order')
@@ -58,7 +61,11 @@ public static function form(Form $form): Form
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('target_datetime')
-                    ->label('Target Time')
+                    ->label('Start Date')
+                    ->dateTime()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('until_date')
+                    ->label('Until Date')
                     ->dateTime()
                     ->sortable(),
                 Tables\Columns\ToggleColumn::make('is_active'),

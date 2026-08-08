@@ -187,7 +187,7 @@
                 @if($counter)
                 <div style="text-align: center; margin-bottom: 25px; color: #fff;">
                     <h3 style="margin:0; font-size: 1.2rem; font-weight: normal; letter-spacing: 2px; text-transform: uppercase; color: #dfb162;">
-                        {{ $counter->name }} - {{ \Carbon\Carbon::parse($counter->target_datetime)->format('d F Y') }}
+                        {{ $counter->name }} - {{ \Carbon\Carbon::parse($counter->target_datetime)->format('d F Y') }}@if($counter->until_date) - {{ \Carbon\Carbon::parse($counter->until_date)->format('d F Y') }}@endif
                     </h3>
                 </div>
                 <div class="countdown-wrapper" id="countdown-timer" data-target="{{ \Carbon\Carbon::parse($counter->target_datetime)->timestamp * 1000 }}">
