@@ -20,7 +20,7 @@ class AnnouncementResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-megaphone';
     protected static ?string $navigationGroup = 'Content Management';
     protected static ?string $navigationLabel = 'Announcements';
-    protected static ?int $navigationSort = 0; // Ensures it's at the top, or it will be sorted alphabetically later
+    protected static ?int $navigationSort = 1; // Ensures it's at the top, or it will be sorted alphabetically later
 
     public static function canAccess(): bool
     {

@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class TimelineResource extends Resource
 {
-    protected static ?int $navigationSort = 10;
+    protected static ?int $navigationSort = 15;
     protected static ?string $model = Timeline::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-calendar-days';

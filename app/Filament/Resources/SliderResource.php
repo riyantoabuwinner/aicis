@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class SliderResource extends Resource
 {
-    protected static ?int $navigationSort = 8;
+    protected static ?int $navigationSort = 11;
     protected static ?string $model = Slider::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-photo';

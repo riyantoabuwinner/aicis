@@ -12,7 +12,7 @@ use Filament\Tables\Table;
 
 class GuidelineResource extends Resource
 {
-    protected static ?int $navigationSort = 11;
+    protected static ?int $navigationSort = 7;
     protected static ?string $model = Guideline::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';

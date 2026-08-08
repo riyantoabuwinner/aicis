@@ -12,7 +12,7 @@ use Filament\Tables\Table;
 
 class DownloadResource extends Resource
 {
-    protected static ?int $navigationSort = 12;
+    protected static ?int $navigationSort = 4;
     protected static ?string $model = Download::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-arrow-down-tray';

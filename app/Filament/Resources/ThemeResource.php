@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ThemeResource extends Resource
 {
-    protected static ?int $navigationSort = 4;
+    protected static ?int $navigationSort = 13;
     protected static ?string $model = Theme::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-swatch';

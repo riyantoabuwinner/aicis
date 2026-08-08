@@ -12,7 +12,7 @@ use Filament\Tables\Table;
 
 class EventThemeResource extends Resource
 {
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 14;
     protected static ?string $model = EventTheme::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-light-bulb';

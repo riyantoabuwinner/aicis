@@ -14,7 +14,7 @@ use Illuminate\Support\Str;
 
 class PostResource extends Resource
 {
-    protected static ?int $navigationSort = 7;
+    protected static ?int $navigationSort = 10;
     protected static ?string $model = Post::class;
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
     protected static ?string $navigationGroup = 'Content Management';

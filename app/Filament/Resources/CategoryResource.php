@@ -13,7 +13,7 @@ use Illuminate\Support\Str;
 
 class CategoryResource extends Resource
 {
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 2;
     protected static ?string $model = Category::class;
     protected static ?string $navigationIcon = 'heroicon-o-tag';
     protected static ?string $navigationGroup = 'Content Management';
